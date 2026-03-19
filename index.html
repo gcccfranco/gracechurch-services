@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Grace Church — Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--sky-l:#d4e8ec;--sky-d:#2d5a65;--beige:#f0ebe0;--beige-d:#e0d8c8;--cream:#faf8f4;--text:#1a2a2e;--muted:#5a7a82;--white:#fff;--border:#e0d8c8;--g-paix:#6b4a8e;--g-paix-l:#ede4f5;--g-fid:#a03030;--g-fid-l:#fde8e8;--g-bonte:#8b4a2e;--g-bonte-l:#f5ede4;--edd-c:#3b6d11;--edd-l:#e8f5e8;--camp-c:#2d5a65}
+[data-dark]{--sky-l:#1a3a40;--sky-d:#7ec8d4;--beige:#1e2a2e;--beige-d:#263036;--cream:#111e22;--text:#e0eaec;--muted:#6a9aa4;--white:#1a2a2e;--border:#263036;--g-paix-l:#231a2e;--g-fid-l:#2e1a1a;--g-bonte-l:#2a1e14;--edd-l:#1a2e1a}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);max-width:480px;margin:0 auto;min-height:100vh;transition:background .2s,color .2s}
+.hdr{background:var(--sky-l);padding:14px 16px 0;transition:background .2s}
+.hdr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.hdr-title{font-family:'Lora',serif;font-size:17px;font-weight:600;color:var(--sky-d)}
+.hdr-right{display:flex;gap:8px;align-items:center}
+.dark-btn{width:30px;height:30px;border-radius:50%;border:.5px solid var(--border);background:var(--white);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
+.priv-badge{font-size:10px;font-weight:500;padding:3px 8px;border-radius:20px;background:var(--sky-d);color:#fff}
+.nav{display:flex;overflow-x:auto;gap:3px;padding-bottom:12px;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nb{flex-shrink:0;padding:6px 12px;border-radius:20px;border:none;font-size:12px;font-weight:500;background:rgba(255,255,255,.5);color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .15s}
+.nb.on{background:var(--sky-d);color:#fff}
+.pnl{display:none;padding:14px 14px 56px}.pnl.on{display:block}
+.filter-row{display:flex;gap:5px;margin-bottom:12px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.filter-row::-webkit-scrollbar{display:none}
+.fb{flex-shrink:0;padding:5px 12px;border-radius:20px;border:1.5px solid var(--border);font-size:11px;font-weight:500;background:var(--white);color:var(--muted);cursor:pointer;transition:all .15s}
+.fb.on{background:var(--sky-d);border-color:var(--sky-d);color:#fff}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px;border:.5px solid var(--border)}
+.tbl{width:100%;border-collapse:collapse;font-size:11px;min-width:640px}
+.tbl th{background:var(--sky-d);color:#fff;padding:8px;text-align:left;font-size:10px;font-weight:500;white-space:nowrap}
+.tbl td{padding:7px 8px;border-bottom:.5px solid var(--border);color:var(--text)}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:var(--beige)}
+.tbl .dc{font-weight:500;color:var(--sky-d);white-space:nowrap}
+.tbl .pc{font-weight:500}
+.tbl .tr{background:var(--sky-l)}
+.tbl .tr .dc::before{content:"● ";font-size:9px}
+.grp-tabs{display:flex;gap:5px;margin-bottom:12px}
+.grp-tab{flex:1;padding:8px 4px;border-radius:10px;border:1.5px solid var(--border);font-size:11px;font-weight:500;text-align:center;cursor:pointer;background:var(--white);color:var(--muted);transition:all .15s}
+.grp-tab[data-g=paix].on{background:var(--g-paix);border-color:var(--g-paix);color:#fff}
+.grp-tab[data-g=fid].on{background:var(--g-fid);border-color:var(--g-fid);color:#fff}
+.grp-tab[data-g=bonte].on{background:var(--g-bonte);border-color:var(--g-bonte);color:#fff}
+.fid-sub{display:flex;gap:5px;margin-bottom:12px}
+.fid-sb{flex:1;padding:6px;border-radius:8px;border:1.5px solid var(--border);font-size:11px;font-weight:500;text-align:center;cursor:pointer;background:var(--white);color:var(--muted);transition:all .15s}
+.fid-sb.on{background:var(--g-fid-l);border-color:var(--g-fid);color:var(--g-fid)}
+.grp-card{background:var(--white);border-radius:12px;border:.5px solid var(--border);margin-bottom:8px;overflow:hidden}
+.grp-head{padding:8px 14px;font-size:12px;font-weight:500;display:flex;justify-content:space-between}
+.gc-paix{background:var(--g-paix-l);color:var(--g-paix)}
+.gc-fid{background:var(--g-fid-l);color:var(--g-fid)}
+.gc-bonte{background:var(--g-bonte-l);color:var(--g-bonte)}
+.grp-row{display:flex;gap:6px;padding:7px 14px;border-top:.5px solid var(--border);font-size:12px}
+.grp-lbl{color:var(--muted);width:68px;flex-shrink:0;font-size:11px}
+.grp-val{color:var(--text);font-weight:500;flex:1}
+.mois-hd{font-size:12px;font-weight:500;color:var(--sky-d);background:var(--sky-l);border-radius:8px;padding:7px 12px;margin-bottom:8px;margin-top:14px}
+.mois-hd:first-child{margin-top:0}
+.edd-ptabs{display:flex;gap:4px;margin-bottom:12px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.edd-ptabs::-webkit-scrollbar{display:none}
+.edd-ptb{flex-shrink:0;padding:5px 10px;border-radius:20px;border:1.5px solid var(--border);font-size:11px;font-weight:500;background:var(--white);color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .15s}
+.edd-ptb.on{background:var(--edd-c);border-color:var(--edd-c);color:#fff}
+.edd-ctabs{display:flex;gap:5px;margin-bottom:12px}
+.edd-ctb{flex:1;padding:7px;border-radius:8px;border:1.5px solid var(--border);font-size:12px;font-weight:500;text-align:center;cursor:pointer;background:var(--white);color:var(--muted);transition:all .15s}
+.edd-ctb.on{background:var(--edd-l);border-color:var(--edd-c);color:var(--edd-c)}
+.edd-card{background:var(--white);border-radius:12px;border:.5px solid var(--border);margin-bottom:8px;display:flex;overflow:hidden}
+.edd-datecol{background:var(--edd-l);width:62px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:8px 4px;border-right:.5px solid var(--border)}
+.edd-dtxt{font-size:11px;font-weight:500;color:var(--edd-c);text-align:center;line-height:1.4}
+.edd-body{flex:1;padding:8px 12px;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.edd-item .lbl{font-size:10px;color:var(--muted)}
+.edd-item .val{font-size:12px;font-weight:500;color:var(--text)}
+.day-block{background:var(--white);border-radius:14px;border:.5px solid var(--border);margin-bottom:12px;overflow:hidden}
+.day-title{background:var(--sky-d);padding:10px 14px;font-size:13px;font-weight:500;color:#fff}
+.seance{border-top:.5px solid var(--border)}
+.seance-hd{padding:8px 14px;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;background:var(--sky-l);color:var(--sky-d)}
+.seance-hd.soir{background:rgba(45,90,101,.15)}
+.seance-bd{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.scol{padding:10px 14px;border-right:.5px solid var(--border)}
+.scol:last-child{border-right:none}
+.scol-lbl{font-size:10px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;margin-bottom:5px}
+.chip{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;background:var(--beige);color:var(--text);margin:2px 2px 2px 0}
+.regie-bar{padding:10px 14px;border-top:.5px solid var(--border);display:flex;gap:12px;flex-wrap:wrap;font-size:11px;background:var(--white)}
+.regie-bar span{color:var(--muted)}.regie-bar b{color:var(--text);font-weight:500}
+.ent-bar{padding:6px 14px;border-top:.5px solid var(--border);font-size:11px;background:var(--beige-d);color:var(--muted)}
+.ent-bar b{color:var(--sky-d)}
+.camp-sub{display:flex;gap:5px;margin-bottom:14px}
+.camp-sb{flex:1;padding:8px;border-radius:10px;border:1.5px solid var(--border);font-size:12px;font-weight:500;text-align:center;cursor:pointer;background:var(--white);color:var(--muted);transition:all .15s}
+.camp-sb.on{background:var(--sky-d);border-color:var(--sky-d);color:#fff}
+.dej-card{background:var(--white);border-radius:12px;border:.5px solid var(--border);margin-bottom:8px;display:flex;align-items:center;gap:12px;padding:10px 14px}
+.dej-date{font-size:11px;font-weight:500;color:var(--sky-d);width:62px;flex-shrink:0}
+.dej-eq{font-size:12px;color:var(--text);flex:1;line-height:1.5}
+.mois-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.mn-lbl{font-size:15px;font-weight:500;color:var(--sky-d)}
+.mn-btn{width:32px;height:32px;border-radius:50%;border:.5px solid var(--border);background:var(--white);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;color:var(--sky-d)}
+.reun-card{background:var(--white);border-radius:12px;border:.5px solid var(--border);margin-bottom:8px;display:flex;gap:12px;padding:10px 14px}
+.rdb{text-align:center;width:36px;flex-shrink:0;padding-top:2px}
+.rdb-day{font-size:22px;font-weight:600;color:var(--sky-d);line-height:1}
+.rdb-m{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.rdb-body{flex:1}
+.rdb-type{font-size:13px;font-weight:500;color:var(--text)}
+.rbadge{display:inline-block;font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px;margin-top:3px}
+.rdb-lieu{font-size:11px;color:var(--muted);margin-top:2px}
+.empty{text-align:center;padding:30px;color:var(--muted);font-size:13px}
+.chants-block{padding:10px 14px;border-top:.5px solid var(--border);background:var(--beige)}
+.chants-lbl{font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;font-weight:500}
+.chant-line{font-size:12px;color:var(--muted);padding:4px 8px;border-radius:6px;border:.5px dashed var(--border);margin-bottom:4px;background:var(--white)}
+</style>
+</head>
+<body>
+<div id="loading" style="position:fixed;top:0;left:0;right:0;bottom:0;background:#faf8f4;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;font-family:'DM Sans',sans-serif">
+  <div style="width:40px;height:40px;border:3px solid #d4e8ec;border-top-color:#2d5a65;border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:16px"></div>
+  <div style="font-size:14px;font-weight:500;color:#2d5a65">Grace Church</div>
+  <div style="font-size:12px;color:#5a7a82;margin-top:4px">Chargement du planning...</div>
+</div>
+<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+<div class="hdr">
+  <div class="hdr-top">
+    <div class="hdr-title">Grace Church — Services</div>
+    <div class="hdr-right">
+      <button class="dark-btn" id="dark-btn" onclick="toggleDark()">☀</button>
+      <span class="priv-badge">Privé</span>
+    </div>
+  </div>
+  <nav class="nav">
+    <button class="nb on" onclick="showTab('culte',this)">Culte</button>
+    <button class="nb" onclick="showTab('dejeuner',this)">Prépa. Table</button>
+    <button class="nb" onclick="showTab('groupe',this)">Groupe</button>
+    <button class="nb" onclick="showTab('edd',this)">EDD</button>
+    <button class="nb" onclick="showTab('campus',this)">Campus</button>
+    <button class="nb" onclick="showTab('reunion',this)">Calendrier</button>
+  </nav>
+</div>
+<div class="pnl on" id="pnl-culte"><div class="filter-row" id="tri-culte"></div><div id="culte-content"></div></div>
+<div class="pnl" id="pnl-dejeuner"><div class="filter-row" id="tri-dej"></div><div id="dej-content"></div></div>
+<div class="pnl" id="pnl-groupe">
+  <div class="grp-tabs">
+    <div class="grp-tab" data-g="paix" onclick="showGrp('paix')">Paix</div>
+    <div class="grp-tab" data-g="fid" onclick="showGrp('fid')">Fidélité</div>
+    <div class="grp-tab" data-g="bonte" onclick="showGrp('bonte')">Bonté</div>
+  </div>
+  <div class="filter-row" id="tri-grp"></div>
+  <div class="fid-sub" id="fid-sub" style="display:none">
+    <div class="fid-sb on" onclick="showFidSub('groupe',this)">Planning groupe</div>
+    <div class="fid-sb" onclick="showFidSub('musiciens',this)">Planning musiciens 🎵</div>
+  </div>
+  <div id="grp-content"></div>
+</div>
+<div class="pnl" id="pnl-edd">
+  <div class="edd-ptabs" id="edd-ptabs"></div>
+  <div class="edd-ctabs" id="edd-ctabs"></div>
+  <div id="edd-content"></div>
+</div>
+<div class="pnl" id="pnl-campus">
+  <div class="camp-sub">
+    <div class="camp-sb on" id="csb-louange" onclick="showCampSub('louange')">Louange</div>
+    <div class="camp-sb" id="csb-entrainement" onclick="showCampSub('entrainement')">Entraînement</div>
+  </div>
+  <div id="camp-content"></div>
+</div>
+<div class="pnl" id="pnl-reunion">
+  <div class="filter-row" id="tri-reun"></div>
+  <div id="reun-content"></div>
+</div>
+<script>
+var CULTE=[
+['2026-01-04','Viviane','Oriane','Olivier','Eva','Éloïse','Yiyi','Lorenzo','Anyi','Daniel SHAN',''],
+['2026-01-11','Jonathan','Daniela','Alice','Eva','Éloïse','Yiyi','Denis','Karémy','Belka',''],
+['2026-01-18','Paul','Christelle Z.','Inès','Timothée','Christelle C.','Stéphane','Anyi','Lorenzo','Hewei',''],
+['2026-01-25','Wendy','Daniela','David C.','Timothée','Christelle C.','Stéphane','Karémy','Karémy','Delphine ZHOU',''],
+['2026-02-01','Jonathan','Daniela','Alice','Esther','Éloïse','Chloé','Lorenzo','Anyi','Pasteur ZHOU','Eva'],
+['2026-02-08','Viviane','Oriane','Olivier','Esther','Éloïse','Chloé','Denis','Karémy','Belka',''],
+['2026-02-15','Jonathan','Ketty','David C.','Eva','Christelle C.','Yiyi','Karémy','Anyi','Delphine ZHOU',''],
+['2026-02-22','Paul','Christelle Z.','Viviane','Eva','Christelle C.','Yiyi','Lorenzo','Denis','Pasteur ZHOU','Karémy'],
+['2026-03-01','Viviane','Oriane','Olivier','Timothée','Éloïse','Stéphane','Karémy','Anyi','Keai CHEN','Eva'],
+['2026-03-08','Jonathan','Daniela','David C.','Timothée','Éloïse','Stéphane','Denis','Lorenzo','Belka',''],
+['2026-03-15','Paul','Christelle Z.','Inès','Esther','Christelle C.','Chloé','Anyi','Karémy','Chunwei HUANG','Eva'],
+['2026-03-22','Viviane','Ketty','Daniela','Esther','Christelle C.','Chloé','Lorenzo','Denis','Andreas BODE',''],
+['2026-03-29','Jonathan','Alice','Olivier','Eva','Éloïse','Yiyi','Karémy','Anyi','Daniel SHAN',''],
+['2026-04-05','Paul','Christelle Z.','David C.','Timothée','Christelle C.','Stéphane','Anyi','Denis','Pasteur ZHOU','Eva'],
+['2026-04-12','Viviane','Oriane','Olivier','Timothée','Christelle C.','Stéphane','Karémy','Lorenzo','John Ong',''],
+['2026-04-19','Jonathan','Daniela','Alice','Esther','Éloïse','Chloé','Denis','Anyi','Shi De Qing',''],
+['2026-04-26','Paul','Christelle Z.','Inès','Esther','Éloïse','Chloé','Lorenzo','Karémy','Andreas BODE',''],
+['2026-05-03','Viviane','Ketty','Daniela','Eva','Christelle C.','Yiyi','Anyi','Denis','Daniel SHAN',''],
+['2026-05-10','Paul','Christelle Z.','David C.','Eva','Christelle C.','Yiyi','Karémy','Lorenzo','Belka',''],
+['2026-05-17','Jonathan','Daniela','Olivier','Timothée','Éloïse','Stéphane','Denis','Anyi','JF Tipaka',''],
+['2026-05-24','Viviane','Oriane','Olivier','Timothée','Éloïse','Stéphane','Lorenzo','Karémy','Chunwei HUANG','Eva'],
+['2026-05-31','Paul','Christelle Z.','Inès','Esther','Christelle C.','Chloé','Anyi','Denis','Daniel SHAN',''],
+['2026-06-07','Jonathan','Daniela','Alice','Esther','Christelle C.','Chloé','Denis','Lorenzo','Keai CHEN','Karémy'],
+['2026-06-14','Viviane','Oriane','Olivier','Eva','Éloïse','Yiyi','Karémy','Anyi','Hewei',''],
+['2026-06-21','Paul','Christelle Z.','David C.','Eva','Éloïse','Yiyi','Lorenzo','Denis','Delphine ZHOU',''],
+['2026-06-28','Jonathan','Daniela','Olivier','Timothée','Christelle C.','Stéphane','Anyi','Karémy','Andreas BODE',''],
+['2026-07-05','','','','','','','','','',''],
+['2026-07-12','','','','','','','','','',''],
+['2026-07-19','','','','','','','','','',''],
+['2026-07-26','','','','','','','','','',''],
+['2026-08-02','','','','','','','','','',''],
+['2026-08-09','','','','','','','','','',''],
+['2026-08-16','','','','','','','','','',''],
+['2026-08-23','','','','','','','','','',''],
+['2026-08-30','','','','','','','','','',''],
+['2026-09-06','','','','','','','','','',''],
+['2026-09-13','','','','','','','','','',''],
+['2026-09-20','','','','','','','','','',''],
+['2026-09-27','','','','','','','','','',''],
+['2026-10-04','','','','','','','','','',''],
+['2026-10-11','','','','','','','','','',''],
+['2026-10-18','','','','','','','','','',''],
+['2026-10-25','','','','','','','','','',''],
+['2026-11-01','','','','','','','','','',''],
+['2026-11-08','','','','','','','','','',''],
+['2026-11-15','','','','','','','','','',''],
+['2026-11-22','','','','','','','','','',''],
+['2026-11-29','','','','','','','','','',''],
+['2026-12-06','','','','','','','','','',''],
+['2026-12-13','','','','','','','','','',''],
+['2026-12-20','','','','','','','','','',''],
+['2026-12-27','','','','','','','','','',''],
+];
+var FIDELITE=[
+['2026-01-04','David Chen','Sylvie Shan','En Christ','Timothée'],
+['2026-01-11','Viviane Liu','Daniel Shan','N. Testament','Timothée'],
+['2026-01-18','Grp Louange','Pasteur Zhou','Offrande','Grp Louange'],
+['2026-01-25','Olivier Sun','Daniel Shan','Communion Fraternelle','Daniela'],
+['2026-02-01','Paul Wu','Activités','Activités','Timothée'],
+['2026-02-08','Ketty Shan','Chuanwei Huang','Sermon','Daniela'],
+['2026-02-15','Daniel Yu','Daniel Shan','Communion Fraternelle','Yawin'],
+['2026-02-22','Chloé Wu','Daniel Shan','Communion Fraternelle','Timothée'],
+['2026-03-01','Karémy Xu','Sylvie Shan','En Christ','Timothée'],
+['2026-03-08','Christelle Zhang','Sylvie Shan','En Christ','Yawin'],
+['2026-03-15','Grp Louange','Pasteur Zhou','Intergroupe','Grp Louange'],
+['2026-03-22','Paul Wu','Louange','Louange','Daniela'],
+['2026-03-29','Daniela Weng','Delphine Zhou','Sermon','Yawin'],
+['2026-04-05','','','',''],
+['2026-04-12','','','',''],
+['2026-04-19','','','',''],
+['2026-04-26','','','',''],
+['2026-05-03','','','',''],
+['2026-05-10','','','',''],
+['2026-05-17','','','',''],
+['2026-05-24','','','',''],
+['2026-05-31','','','',''],
+['2026-06-07','','','',''],
+['2026-06-14','','','',''],
+['2026-06-21','','','',''],
+['2026-06-28','','','',''],
+['2026-07-05','','','',''],
+['2026-07-12','','','',''],
+['2026-07-19','','','',''],
+['2026-07-26','','','',''],
+['2026-08-02','','','',''],
+['2026-08-09','','','',''],
+['2026-08-16','','','',''],
+['2026-08-23','','','',''],
+['2026-08-30','','','',''],
+['2026-09-06','','','',''],
+['2026-09-13','','','',''],
+['2026-09-20','','','',''],
+['2026-09-27','','','',''],
+['2026-10-04','','','',''],
+['2026-10-11','','','',''],
+['2026-10-18','','','',''],
+['2026-10-25','','','',''],
+['2026-11-01','','','',''],
+['2026-11-08','','','',''],
+['2026-11-15','','','',''],
+['2026-11-22','','','',''],
+['2026-11-29','','','',''],
+['2026-12-06','','','',''],
+['2026-12-13','','','',''],
+['2026-12-20','','','',''],
+['2026-12-27','','','',''],
+];
+var FIDELITE_MUSIC=[
+['2026-01-04','David.C','Timothée','David S.','Chloé'],
+['2026-01-11','Viviane','Timothée','David S.','Maëlice'],
+['2026-01-18','Interfranco','','',''],
+['2026-01-25','Olivier','Daniela','David S.','Maëlice'],
+['2026-02-01','Anniversaire Grace Church','','',''],
+['2026-02-08','Ketty','Daniela','David S.','Chloé'],
+['2026-02-15','Daniel','Yawin','David S.','Chloé'],
+['2026-02-22','Chloé','Timothée','David S.','Maëlice'],
+['2026-03-01','Karemy','Timothée','David S.','Chloé'],
+['2026-03-08','Christelle','Yawin','David S.','Maëlice'],
+['2026-03-15','Intergroupe','','',''],
+['2026-03-22','Paul','Timothée','David S.','Chloé'],
+['2026-03-29','Daniela','Yawin','David S.','Maëlice'],
+['2026-04-05','','','David S.',''],
+['2026-04-12','','','David S.',''],
+['2026-04-19','','','David S.',''],
+['2026-04-26','','','David S.',''],
+['2026-05-03','','','David S.',''],
+['2026-05-10','','','David S.',''],
+['2026-05-17','','','David S.',''],
+['2026-05-24','','','David S.',''],
+['2026-05-31','','','David S.',''],
+['2026-06-07','','','David S.',''],
+['2026-06-14','','','David S.',''],
+['2026-06-21','','','David S.',''],
+['2026-06-28','','','David S.',''],
+['2026-07-05','','','David S.',''],
+['2026-07-12','','','David S.',''],
+['2026-07-19','','','David S.',''],
+['2026-07-26','','','David S.',''],
+['2026-08-02','','','David S.',''],
+['2026-08-09','','','David S.',''],
+['2026-08-16','','','David S.',''],
+['2026-08-23','','','David S.',''],
+['2026-08-30','','','David S.',''],
+['2026-09-06','','','David S.',''],
+['2026-09-13','','','David S.',''],
+['2026-09-20','','','David S.',''],
+['2026-09-27','','','David S.',''],
+['2026-10-04','','','David S.',''],
+['2026-10-11','','','David S.',''],
+['2026-10-18','','','David S.',''],
+['2026-10-25','','','David S.',''],
+['2026-11-01','','','David S.',''],
+['2026-11-08','','','David S.',''],
+['2026-11-15','','','David S.',''],
+['2026-11-22','','','David S.',''],
+['2026-11-29','','','David S.',''],
+['2026-12-06','','','David S.',''],
+['2026-12-13','','','David S.',''],
+['2026-12-20','','','David S.',''],
+['2026-12-27','','','David S.',''],
+];
+var PAIX=[
+['2026-01-04','','',''],
+['2026-01-11','','',''],
+['2026-01-18','','',''],
+['2026-01-25','','',''],
+['2026-02-01','','',''],
+['2026-02-08','','',''],
+['2026-02-15','','',''],
+['2026-02-22','','',''],
+['2026-03-01','','',''],
+['2026-03-08','','',''],
+['2026-03-15','','',''],
+['2026-03-22','','',''],
+['2026-03-29','','',''],
+['2026-04-05','','Delphine','Paraboles'],
+['2026-04-12','Gr Louange','Professeur Wang','Intergroupe'],
+['2026-04-19','','Aisu','Nouveau Testament'],
+['2026-04-26','','Aisu','Nouveau Testament'],
+['2026-05-03','','Daniel Shan',''],
+['2026-05-10','','Aisu','Nouveau Testament'],
+['2026-05-17','','Cecile','Etude biblique'],
+['2026-05-24','','Christelle','Séance libre'],
+['2026-05-31','','Delphine','Formation Spirituel'],
+['2026-06-07','','Delphine','Etude biblique'],
+['2026-06-14','','Louange','Inter franco'],
+['2026-06-21','','Delphine','Formation Spirituel'],
+['2026-06-28','','Delphine','Etude biblique'],
+['2026-07-05','','',''],
+['2026-07-12','','',''],
+['2026-07-19','','',''],
+['2026-07-26','','',''],
+['2026-08-02','','',''],
+['2026-08-09','','',''],
+['2026-08-16','','',''],
+['2026-08-23','','',''],
+['2026-08-30','','',''],
+['2026-09-06','','',''],
+['2026-09-13','','',''],
+['2026-09-20','','',''],
+['2026-09-27','','',''],
+['2026-10-04','','',''],
+['2026-10-11','','',''],
+['2026-10-18','','',''],
+['2026-10-25','','',''],
+['2026-11-01','','',''],
+['2026-11-08','','',''],
+['2026-11-15','','',''],
+['2026-11-22','','',''],
+['2026-11-29','','',''],
+['2026-12-06','','',''],
+['2026-12-13','','',''],
+['2026-12-20','','',''],
+['2026-12-27','','',''],
+];
+var BONTE=[
+['2026-01-04','','',''],
+['2026-01-11','','',''],
+['2026-01-18','','',''],
+['2026-01-25','','',''],
+['2026-02-01','','',''],
+['2026-02-08','','',''],
+['2026-02-15','','',''],
+['2026-02-22','','',''],
+['2026-03-01','','',''],
+['2026-03-08','','',''],
+['2026-03-15','','',''],
+['2026-03-22','','',''],
+['2026-03-29','','',''],
+['2026-04-05','','','Paques'],
+['2026-04-12','Equipe louange','Professeur Wang','Intergroupe'],
+['2026-04-19','Caire','Stephane','Relation'],
+['2026-04-26','Aurélien','Stephane','Partage biblique'],
+['2026-05-03','Océane','HeWei','Evangile de Jean'],
+['2026-05-10','Léo','HeWei','Nouevlle Vie'],
+['2026-05-17','Lorenzo','Lorenzo','Séance libre'],
+['2026-05-24','Lydia','Cichang',''],
+['2026-05-31','Mina','Stephane','Partage biblique'],
+['2026-06-07','Daniel','Stephane','Evangile de Luc'],
+['2026-06-14','Equipe louange','Louange','Interfranco'],
+['2026-06-21','Mathys','HeWei','Nouvelle Vie'],
+['2026-06-28','Henoc','HeWei','Partage biblique'],
+['2026-07-05','','',''],
+['2026-07-12','','',''],
+['2026-07-19','','',''],
+['2026-07-26','','',''],
+['2026-08-02','','',''],
+['2026-08-09','','',''],
+['2026-08-16','','',''],
+['2026-08-23','','',''],
+['2026-08-30','','',''],
+['2026-09-06','','',''],
+['2026-09-13','','',''],
+['2026-09-20','','',''],
+['2026-09-27','','',''],
+['2026-10-04','','',''],
+['2026-10-11','','',''],
+['2026-10-18','','',''],
+['2026-10-25','','',''],
+['2026-11-01','','',''],
+['2026-11-08','','',''],
+['2026-11-15','','',''],
+['2026-11-22','','',''],
+['2026-11-29','','',''],
+['2026-12-06','','',''],
+['2026-12-13','','',''],
+['2026-12-20','','',''],
+['2026-12-27','','',''],
+];
+var DEJEUNER=[
+['2026-01-04','Daniel F.,Lucas,David S.,Maëlice'],
+['2026-01-11','Mathys,Viviane,Patrick,Olivier'],
+['2026-01-18','Lydia,Enzo,Patrick,Michel C.'],
+['2026-01-25','Jimmy,Aurélien,David S.,Michel C.'],
+['2026-02-01','Léo,Aurélia,Ketty,Paul'],
+['2026-02-08','Hélène,Mina,Chloé Ji,David C.'],
+['2026-02-15','Valérie,Daniel F.,Inès,Chloé Wu'],
+['2026-02-22','Michaël,Océane Z.,Aline,David C.'],
+['2026-03-01','Esther,Lorenzo,Maëlice,Daniel Y.'],
+['2026-03-08','Claire,Jérémie,Michel (J),Daniel Y.'],
+['2026-03-15','Hénoc,Lauriane,Yawin,Timothée'],
+['2026-03-22','Eloïse,Eva,Oriane,Maxime'],
+['2026-03-29','Mathys,Valentine,Michel (J),Maxime'],
+['2026-07-05',''],
+['2026-07-12',''],
+['2026-07-19',''],
+['2026-07-26',''],
+['2026-08-02',''],
+['2026-08-09',''],
+['2026-08-16',''],
+['2026-08-23',''],
+['2026-08-30',''],
+['2026-09-06',''],
+['2026-09-13',''],
+['2026-09-20',''],
+['2026-09-27',''],
+];
+var EDD_DATA={
+  'P1_JANVIER_FÉVRIER':{
+    label:'Période 1 — JANVIER FÉVRIER',
+    classes:{
+      '中班':[
+        ['2026-01-04','','','','',''],
+        ['2026-01-11','','','','',''],
+        ['2026-01-18','','','','',''],
+        ['2026-01-25','','','','',''],
+        ['2026-02-01','','','','',''],
+        ['2026-02-08','','','','',''],
+        ['2026-02-15','','','','',''],
+        ['2026-02-22','','','','',''],
+      ],
+      '大班':[
+        ['2026-01-04','','','','',''],
+        ['2026-01-11','','','','',''],
+        ['2026-01-18','','','','',''],
+        ['2026-01-25','','','','',''],
+        ['2026-02-01','','','','',''],
+        ['2026-02-08','','','','',''],
+        ['2026-02-15','','','','',''],
+        ['2026-02-22','','','','',''],
+      ],
+      '高班':[
+        ['2026-01-04','','','','',''],
+        ['2026-01-11','','','','',''],
+        ['2026-01-18','','','','',''],
+        ['2026-01-25','','','','',''],
+        ['2026-02-01','','','','',''],
+        ['2026-02-08','','','','',''],
+        ['2026-02-15','','','','',''],
+        ['2026-02-22','','','','',''],
+      ],
+    }
+  },
+  'P2_MARS_AVRIL':{
+    label:'Période 2 — MARS AVRIL',
+    classes:{
+      '中班':[
+        ['2026-03-01','Daniel','Olivier','Esther','Chloé',''],
+        ['2026-03-08','Daniel','Olivier','Esther','Chloé',''],
+        ['2026-03-15','Olivier','Daniel','Esther','Chloé',''],
+        ['2026-03-22','Daniel','Olivier','Esther','Chloé',''],
+        ['2026-03-29','Daniel','Olivier','Esther','Chloé',''],
+        ['2026-04-05','Daniel','Olivier','Weila','Chloé',''],
+        ['2026-04-12','Olivier','Daniel','Weila','Chloé',''],
+        ['2026-04-19','Daniel','Olivier','Weila','Chloé',''],
+        ['2026-04-26','Daniel','Olivier','Weila','Chloé',''],
+      ],
+      '大班':[
+        ['2026-03-01','Nathalie','','Eva','Lauriane','Éloïse'],
+        ['2026-03-08','Nathalie','','Eva','Lauriane','Éloïse'],
+        ['2026-03-15','Nathalie','','Eva','Lauriane','Éloïse'],
+        ['2026-03-22','Nathalie','','Eva','Lauriane','Éloïse'],
+        ['2026-03-29','Nathalie','','Eva','Lauriane','Éloïse'],
+        ['2026-04-05','Nathalie','Océane','Eva','Lauriane','Éloïse'],
+        ['2026-04-12','Nathalie','Océane','Eva','Lauriane','Éloïse'],
+        ['2026-04-19','Nathalie','Océane','Eva','Lauriane','Éloïse'],
+        ['2026-04-26','Nathalie','Océane','Eva','Lauriane','Éloïse'],
+      ],
+      '高班':[
+        ['2026-03-01','Viviane','','Jonathan','Maëlice','David S.'],
+        ['2026-03-08','Viviane','','Jonathan','Maëlice','David S.'],
+        ['2026-03-15','Viviane','','Jonathan','Maëlice','David S.'],
+        ['2026-03-22','Viviane','','Jonathan','Maëlice','David S.'],
+        ['2026-03-29','Viviane','','Jonathan','Maëlice','David S.'],
+        ['2026-04-05','Viviane','','Jonathan','Maëlice','David S.'],
+        ['2026-04-12','Viviane','','Jonathan','Maëlice','David S.'],
+        ['2026-04-19','Viviane','','Jonathan','Maëlice','David S.'],
+        ['2026-04-26','Viviane','','Jonathan','Maëlice','David S.'],
+      ],
+    }
+  },
+  'P3_MAI_JUIN':{
+    label:'Période 3 — MAI JUIN',
+    classes:{
+      '中班':[
+        ['2026-05-03','','','','',''],
+        ['2026-05-10','','','','',''],
+        ['2026-05-17','','','','',''],
+        ['2026-05-24','','','','',''],
+        ['2026-05-31','','','','',''],
+        ['2026-06-07','','','','',''],
+        ['2026-06-14','','','','',''],
+        ['2026-06-21','','','','',''],
+        ['2026-06-28','','','','',''],
+      ],
+      '大班':[
+        ['2026-05-03','','','','',''],
+        ['2026-05-10','','','','',''],
+        ['2026-05-17','','','','',''],
+        ['2026-05-24','','','','',''],
+        ['2026-05-31','','','','',''],
+        ['2026-06-07','','','','',''],
+        ['2026-06-14','','','','',''],
+        ['2026-06-21','','','','',''],
+        ['2026-06-28','','','','',''],
+      ],
+      '高班':[
+        ['2026-05-03','','','','',''],
+        ['2026-05-10','','','','',''],
+        ['2026-05-17','','','','',''],
+        ['2026-05-24','','','','',''],
+        ['2026-05-31','','','','',''],
+        ['2026-06-07','','','','',''],
+        ['2026-06-14','','','','',''],
+        ['2026-06-21','','','','',''],
+        ['2026-06-28','','','','',''],
+      ],
+    }
+  },
+  'P4_JUILLET_AOÛT':{
+    label:'Période 4 — JUILLET AOÛT',
+    classes:{
+      '中班':[
+        ['2026-07-05','','','','',''],
+        ['2026-07-12','','','','',''],
+        ['2026-07-19','','','','',''],
+        ['2026-07-26','','','','',''],
+        ['2026-08-02','','','','',''],
+        ['2026-08-09','','','','',''],
+        ['2026-08-16','','','','',''],
+        ['2026-08-23','','','','',''],
+        ['2026-08-30','','','','',''],
+      ],
+      '大班':[
+        ['2026-07-05','','','','',''],
+        ['2026-07-12','','','','',''],
+        ['2026-07-19','','','','',''],
+        ['2026-07-26','','','','',''],
+        ['2026-08-02','','','','',''],
+        ['2026-08-09','','','','',''],
+        ['2026-08-16','','','','',''],
+        ['2026-08-23','','','','',''],
+        ['2026-08-30','','','','',''],
+      ],
+      '高班':[
+        ['2026-07-05','','','','',''],
+        ['2026-07-12','','','','',''],
+        ['2026-07-19','','','','',''],
+        ['2026-07-26','','','','',''],
+        ['2026-08-02','','','','',''],
+        ['2026-08-09','','','','',''],
+        ['2026-08-16','','','','',''],
+        ['2026-08-23','','','','',''],
+        ['2026-08-30','','','','',''],
+      ],
+    }
+  },
+  'P5_SEPTEMBRE_OCTOBRE':{
+    label:'Période 5 — SEPTEMBRE OCTOBRE',
+    classes:{
+      '中班':[
+        ['2026-09-06','','','','',''],
+        ['2026-09-13','','','','',''],
+        ['2026-09-20','','','','',''],
+        ['2026-09-27','','','','',''],
+        ['2026-10-04','','','','',''],
+        ['2026-10-11','','','','',''],
+        ['2026-10-18','','','','',''],
+        ['2026-10-25','','','','',''],
+      ],
+      '大班':[
+        ['2026-09-06','','','','',''],
+        ['2026-09-13','','','','',''],
+        ['2026-09-20','','','','',''],
+        ['2026-09-27','','','','',''],
+        ['2026-10-04','','','','',''],
+        ['2026-10-11','','','','',''],
+        ['2026-10-18','','','','',''],
+        ['2026-10-25','','','','',''],
+      ],
+      '高班':[
+        ['2026-09-06','','','','',''],
+        ['2026-09-13','','','','',''],
+        ['2026-09-20','','','','',''],
+        ['2026-09-27','','','','',''],
+        ['2026-10-04','','','','',''],
+        ['2026-10-11','','','','',''],
+        ['2026-10-18','','','','',''],
+        ['2026-10-25','','','','',''],
+      ],
+    }
+  },
+  'P6_NOVEMBRE_DÉCEMBRE':{
+    label:'Période 6 — NOVEMBRE DÉCEMBRE',
+    classes:{
+      '中班':[
+        ['2026-11-01','','','','',''],
+        ['2026-11-08','','','','',''],
+        ['2026-11-15','','','','',''],
+        ['2026-11-22','','','','',''],
+        ['2026-11-29','','','','',''],
+        ['2026-12-06','','','','',''],
+        ['2026-12-13','','','','',''],
+        ['2026-12-20','','','','',''],
+        ['2026-12-27','','','','',''],
+      ],
+      '大班':[
+        ['2026-11-01','','','','',''],
+        ['2026-11-08','','','','',''],
+        ['2026-11-15','','','','',''],
+        ['2026-11-22','','','','',''],
+        ['2026-11-29','','','','',''],
+        ['2026-12-06','','','','',''],
+        ['2026-12-13','','','','',''],
+        ['2026-12-20','','','','',''],
+        ['2026-12-27','','','','',''],
+      ],
+      '高班':[
+        ['2026-11-01','','','','',''],
+        ['2026-11-08','','','','',''],
+        ['2026-11-15','','','','',''],
+        ['2026-11-22','','','','',''],
+        ['2026-11-29','','','','',''],
+        ['2026-12-06','','','','',''],
+        ['2026-12-13','','','','',''],
+        ['2026-12-20','','','','',''],
+        ['2026-12-27','','','','',''],
+      ],
+    }
+  },
+};
+var CAMP_LOUANGE=[
+  {d:'27/07 Soir',ch:'徐欢乐,Viviane,Paul',mu:'Piano: Jo,Guitare: Telle,Batterie: Steph',rg:'Sono: Denis,PPT: Lorenzo'},
+  {d:'28/07 Matin',ch:'翁云丹,Daniela,Jonathan',mu:'Piano: Eva,Guitare: Éloïse,Batterie: Yiyi',rg:'Sono: Denis,PPT: Lorenzo'},
+  {d:'28/07 Soir',ch:'周小秋,Oriane,Paul',mu:'Piano: Timo,Guitare: Éloïse,Batterie: Steph',rg:'Sono: Denis,PPT: Lorenzo'},
+  {d:'29/07 Matin',ch:'徐欢乐,Viviane,Jonathan',mu:'Piano: Esther,Guitare: Telle,Batterie: Steph',rg:'Sono: Denis,PPT: Lorenzo'},
+  {d:'29/07 Soir',ch:'Jonathan,翁云丹,Daniela',mu:'Piano: Eva,Guitare: Éloïse,Batterie: Lauriane',rg:'Sono: Denis,PPT: Lorenzo'},
+  {d:'30/07 Matin',ch:'周小秋,Oriane,Paul',mu:'Piano: Timo,Guitare: Éloïse,Batterie: Steph',rg:'Sono: Denis,PPT: Lorenzo'},
+  {d:'30/07 Soir',ch:'翁云丹,Daniela,Jonathan',mu:'Piano: Eva,Guitare: Éloïse,Batterie: Yiyi',rg:'Sono: Denis,PPT: Lorenzo'},
+  {d:'31/07 Matin',ch:'Paul,徐欢乐,Viviane',mu:'Piano: Jo,Guitare: Telle,Batterie: Hewei',rg:'Sono: Denis,PPT: Lorenzo'},
+];
+var CAMP_ENT=[
+  {d:'27/07 Soir',ch:'徐欢乐,Viviane,Paul',mu:'Piano: Jo,Guitare: Telle,Batterie: Steph',ent:'2026-07-24'},
+  {d:'28/07 Matin',ch:'翁云丹,Daniela,Jonathan',mu:'Piano: Eva,Guitare: Éloïse,Batterie: Yiyi',ent:'2026-07-24'},
+  {d:'28/07 Soir',ch:'周小秋,Oriane,Paul',mu:'Piano: Timo,Guitare: Éloïse,Batterie: Steph',ent:'2026-07-24'},
+  {d:'29/07 Matin',ch:'徐欢乐,Viviane,Jonathan',mu:'Piano: Esther,Guitare: Telle,Batterie: Steph',ent:'2026-07-17'},
+  {d:'29/07 Soir',ch:'Jonathan,翁云丹,Daniela',mu:'Piano: Eva,Guitare: Éloïse,Batterie: Lauriane',ent:'2026-07-17'},
+  {d:'30/07 Matin',ch:'周小秋,Oriane,Paul',mu:'Piano: Timo,Guitare: Éloïse,Batterie: Steph',ent:'2026-07-10'},
+  {d:'30/07 Soir',ch:'翁云丹,Daniela,Jonathan',mu:'Piano: Eva,Guitare: Éloïse,Batterie: Yiyi',ent:'2026-07-10'},
+  {d:'31/07 Matin',ch:'Paul,徐欢乐,Viviane',mu:'Piano: Jo,Guitare: Telle,Batterie: Hewei',ent:'2026-07-03'},
+];
+var REUNIONS=[
+  {d:'2026-01-11',h:'10h30',tp:'Réunion',gr:'Orga',ti:'Réunion mensuelle Orga',li:'Église',pa:'Jonathan, Paul, Wendy, Viviane',no:'Ordre du jour : planning T1'},
+  {d:'2026-01-18',h:'14h00',tp:'Réunion',gr:'DA',ti:'Réunion diacres & anciens',li:'Salle annexe',pa:'Pasteur Zhou, Daniel Shan, ...',no:''},
+  {d:'2026-02-01',h:'10h00',tp:'Réunion',gr:'Groupes',ti:'Réunion responsables de groupe',li:'Zoom',pa:'Responsables Paix/Fidélité/Bonté',no:''},
+  {d:'2026-02-15',h:'14h00',tp:'Entr.',gr:'Tous',ti:'Entraînement Interfranco Pâques',li:'Église',pa:'Tous les groupes franco',no:'Répétition chants de Pâques'},
+  {d:'2026-03-08',h:'14h00',tp:'Entr.',gr:'Tous',ti:'Entraînement Intergroupe Pâques',li:'Église',pa:'Groupes Paix+Fidélité+Bonté',no:''},
+  {d:'2026-03-22',h:'10h30',tp:'Réunion',gr:'Comité',ti:'Réunion Comité Campus 2026',li:'Église',pa:'Comité organisateur',no:'Budget, programme, intervenants'},
+  {d:'2026-04-05',h:'14h00',tp:'Entr.',gr:'Louange',ti:'Entraînement Campus — louange',li:'Église',pa:'TEAM Louange',no:'Sélection chants campus'},
+  {d:'2026-05-03',h:'14h00',tp:'Entr.',gr:'Tous',ti:'Entraînement Interfranco 1er mai',li:'Extérieur',pa:'Tous groupes franco',no:''},
+  {d:'2026-06-07',h:'10h30',tp:'Réunion',gr:'Orga',ti:'Point Campus — 2 mois avant',li:'Église',pa:'Jonathan, Paul, Wendy',no:'Logistique, inscriptions'},
+  {d:'2026-07-05',h:'09h00',tp:'Entr.',gr:'Louange',ti:'Entraînement Campus — final',li:'Église',pa:'TEAM Louange',no:'Répétition générale'},
+];
+
+var RCOL={
+  "Réunion":{bg:"#d4e8ec",c:"#2d5a65",l:"Réunion"},
+  "Entr.":{bg:"#e8f5e8",c:"#3b6d11",l:"Entraîn."},
+  "Événement":{bg:"#fde8e8",c:"#a03030",l:"Événement"},
+  "Entraînement":{bg:"#e8f5e8",c:"#3b6d11",l:"Entraîn."},
+  "orga":{bg:"#d4e8ec",c:"#2d5a65",l:"Orga"},
+  "da":{bg:"#ede4f5",c:"#6b4a8e",l:"DA"},
+  "ent":{bg:"#e8f5e8",c:"#3b6d11",l:"Entraîn."},
+  "camp":{bg:"#f5ede4",c:"#8b4a2e",l:"Campus"}
+};
+var MOIS=["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
+var MOISC=["jan","fév","mar","avr","mai","jun","jul","aoû","sep","oct","nov","déc"];
+var JOURC=["dim","lun","mar","mer","jeu","ven","sam"];
+var EDD_PERIODES=Object.keys(EDD_DATA);
+var EDD_CLASSES=["中班","大班","高班"];
+
+var culteTri="T1",grpCur="paix",grpTri="T1",fidSub="groupe";
+var eddPeriode=EDD_PERIODES[0],eddClasse="中班";
+var campSub="louange",reunMois=new Date().getMonth();
+
+function t(){var d=new Date();return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());}
+function pad(n){return String(n).padStart(2,"0");}
+function fd(s){var p=s.split("-");var d=new Date(+p[0],+p[1]-1,+p[2]);return JOURC[d.getDay()]+" "+d.getDate()+" "+MOISC[+p[1]-1];}
+function fdlong(s){var p=s.split("-");return p[2]*1+" "+MOIS[+p[1]-1];}
+function tri(s){var m=+s.split("-")[1];return m<=3?"T1":m<=6?"T2":m<=9?"T3":"T4";}
+function mois(s){return +s.split("-")[1];}
+function groupByMois(rows,dateIdx){
+  var g={};
+  rows.forEach(function(r){var m=MOIS[mois(r[dateIdx])-1];if(!g[m])g[m]=[];g[m].push(r);});
+  return g;
+}
+function filterTri(rows,t,idx){return rows.filter(function(r){return tri(r[idx||0])===t;});}
+function buildFiltres(cont,cur,fn){
+  document.getElementById(cont).innerHTML=["T1","T2","T3","T4"].map(function(t){
+    return '<button class="fb'+(t===cur?" on":"") +'" onclick="'+fn+'(\''+t+'\')">' +t+'</button>';
+  }).join("");
+}
+
+function showTab(k,btn){
+  document.querySelectorAll(".pnl").forEach(function(p){p.classList.remove("on");});
+  document.querySelectorAll(".nb").forEach(function(b){b.classList.remove("on");});
+  document.getElementById("pnl-"+k).classList.add("on");
+  if(btn)btn.classList.add("on");
+}
+
+function toggleDark(){
+  var b=document.body;
+  if(b.hasAttribute("data-dark")){b.removeAttribute("data-dark");document.getElementById("dark-btn").textContent="☀";}
+  else{b.setAttribute("data-dark","");document.getElementById("dark-btn").textContent="🌙";}
+}
+
+/* ─ CULTE ─ */
+function setCulteTri(t){culteTri=t;renderCulte();}
+function renderCulte(){
+  buildFiltres("tri-culte",culteTri,"setCulteTri");
+  var rows=filterTri(CULTE,culteTri);
+  var td=t();
+  var grps=groupByMois(rows,0);
+  var h="";
+  Object.keys(grps).forEach(function(m){
+    h+='<div class="mois-hd">'+m+'</div>';
+    h+='<div class="tbl-wrap"><table class="tbl"><thead><tr>';
+    ["Date","Présidence","Choriste 1","Choriste 2","Piano","Guitare","Batterie","Sono","PPT","Orateur","Trad."].forEach(function(c){h+="<th>"+c+"</th>";});
+    h+="</tr></thead><tbody>";
+    grps[m].forEach(function(r){
+      var isT=r[0]===td;
+      h+='<tr'+(isT?' class="tr"':'')+'>';
+      h+='<td class="dc">'+fd(r[0])+'</td>';
+      h+='<td class="pc">'+(r[1]||"—")+'</td>';
+      [r[2],r[3],r[4],r[5],r[6],r[7],r[8],r[9],r[10]].forEach(function(v){h+="<td>"+(v||"—")+"</td>";});
+      h+="</tr>";
+    });
+    h+="</tbody></table></div>";
+  });
+  document.getElementById("culte-content").innerHTML=h||'<div class="empty">Aucune donnée</div>';
+}
+
+/* ─ DÉJEUNER ─ */
+var dejTri="T1";
+function setDejTri(t){dejTri=t;renderDejeuner();}
+function renderDejeuner(){
+  buildFiltres("tri-dej",dejTri,"setDejTri");
+  var td=t();
+  var rows=filterTri(DEJEUNER,dejTri);
+  var grps=groupByMois(rows,0);
+  var h="";
+  Object.keys(grps).forEach(function(m){
+    h+='<div class="mois-hd">'+m+'</div>';
+    grps[m].forEach(function(r){
+      var isT=r[0]===td;
+      var eq=r[1]?r[1].split(",").join(" · "):"—";
+      h+='<div class="dej-card"><div class="dej-date">'+fd(r[0])+'</div>';
+      h+='<div class="dej-eq">'+eq+'</div></div>';
+    });
+  });
+  document.getElementById("dej-content").innerHTML=h||'<div class="empty">Aucune donnée pour ce trimestre</div>';
+}
+
+/* ─ GROUPE ─ */
+function showGrp(g){
+  grpCur=g;
+  document.querySelectorAll(".grp-tab").forEach(function(b){b.classList.remove("on");});
+  document.querySelector('[data-g='+g+']').classList.add("on");
+  document.getElementById("fid-sub").style.display=g==="fid"?"flex":"none";
+  if(g!=="fid") fidSub="groupe";
+  renderGrp();
+}
+function showFidSub(s,btn){
+  fidSub=s;
+  document.querySelectorAll(".fid-sb").forEach(function(b){b.classList.remove("on");});
+  if(btn)btn.classList.add("on");
+  renderGrp();
+}
+function setGrpTri(t){grpTri=t;renderGrp();}
+function renderGrp(){
+  buildFiltres("tri-grp",grpTri,"setGrpTri");
+  var td=t();
+  var cls=grpCur==="paix"?"gc-paix":grpCur==="fid"?"gc-fid":"gc-bonte";
+  var h="";
+
+  if(grpCur==="fid" && fidSub==="musiciens"){
+    var rows=filterTri(FIDELITE_MUSIC,grpTri);
+    var grps=groupByMois(rows,0);
+    Object.keys(grps).forEach(function(m){
+      h+='<div class="mois-hd">'+m+'</div>';
+      grps[m].forEach(function(r){
+        var isT=r[0]===td;
+        h+='<div class="grp-card"><div class="grp-head gc-fid">'+fd(r[0])+'</div>';
+        h+='<div class="grp-row"><div class="grp-lbl">Présidence</div><div class="grp-val">'+(r[1]||"—")+'</div></div>';
+        h+='<div class="grp-row"><div class="grp-lbl">Piano</div><div class="grp-val">'+(r[2]||"—")+'</div></div>';
+        h+='<div class="grp-row"><div class="grp-lbl">Guitare</div><div class="grp-val">'+(r[3]||"—")+'</div></div>';
+        h+='<div class="grp-row"><div class="grp-lbl">Batterie</div><div class="grp-val">'+(r[4]||"—")+'</div></div>';
+        h+='</div>';
+      });
+    });
+  } else {
+    var data=grpCur==="paix"?PAIX:grpCur==="fid"?FIDELITE:BONTE;
+    var rows=filterTri(data,grpTri);
+    var grps=groupByMois(rows,0);
+    Object.keys(grps).forEach(function(m){
+      h+='<div class="mois-hd">'+m+'</div>';
+      grps[m].forEach(function(r){
+        var isT=r[0]===td;
+        h+='<div class="grp-card"><div class="grp-head '+cls+'">';
+        h+=fd(r[0]);
+        if(r[3])h+='<span style="font-weight:400;opacity:.8"> — '+r[3]+'</span>';
+        h+='</div>';
+        h+='<div class="grp-row"><div class="grp-lbl">Présidence</div><div class="grp-val">'+(r[1]||"—")+'</div></div>';
+        if(r[2]){h+='<div class="grp-row"><div class="grp-lbl">Orateur</div><div class="grp-val">'+r[2]+'</div></div>';}
+        if(grpCur==="fid" && r[4]){h+='<div class="grp-row"><div class="grp-lbl">Piano</div><div class="grp-val">'+r[4]+'</div></div>';}
+        h+='</div>';
+      });
+    });
+  }
+  document.getElementById("grp-content").innerHTML=h||'<div class="empty">Aucune donnée</div>';
+}
+
+/* ─ EDD ─ */
+function renderEddPeriodeTabs(){
+  var short=["P1 Jan–Fév","P2 Mar–Avr","P3 Mai–Jun","P4 Jul–Aoû","P5 Sep–Oct","P6 Nov–Déc"];
+  document.getElementById("edd-ptabs").innerHTML=EDD_PERIODES.map(function(k,i){
+    return '<button class="edd-ptb'+(k===eddPeriode?" on":"")+'" onclick="setEddPeriode(\''+k+'\')">'+short[i]+'</button>';
+  }).join("");
+}
+function renderEddClasseTabs(){
+  document.getElementById("edd-ctabs").innerHTML=EDD_CLASSES.map(function(c){
+    return '<div class="edd-ctb'+(c===eddClasse?" on":"")+'" onclick="setEddClasse(\''+c+'\')">'+c+'</div>';
+  }).join("");
+}
+function setEddPeriode(p){eddPeriode=p;renderEddPeriodeTabs();renderEdd();}
+function setEddClasse(c){eddClasse=c;renderEddClasseTabs();renderEdd();}
+function renderEdd(){
+  var rows=(EDD_DATA[eddPeriode]&&EDD_DATA[eddPeriode].classes&&EDD_DATA[eddPeriode].classes[eddClasse])||[];
+  var td=t();
+  var h="";
+  rows.forEach(function(r){
+    var isT=r[0]===td;
+    h+='<div class="edd-card"><div class="edd-datecol"><div class="edd-dtxt">'+fd(r[0])+'</div></div>';
+    h+='<div class="edd-body">';
+    var fields=[["Présidence",r[1]],["Suppléant",r[2]],["Piano",r[3]],["Cajon",r[4]],["Guitare",r[5]]];
+    fields.forEach(function(f){
+      if(f[1]||true){h+='<div class="edd-item"><div class="lbl">'+f[0]+'</div><div class="val">'+(f[1]||"—")+'</div></div>';}
+    });
+    h+='</div></div>';
+  });
+  document.getElementById("edd-content").innerHTML=h||'<div class="empty">Aucune donnée pour cette période</div>';
+}
+
+/* ─ CAMPUS ─ */
+function showCampSub(s){
+  campSub=s;
+  document.getElementById("csb-louange").classList.toggle("on",s==="louange");
+  document.getElementById("csb-entrainement").classList.toggle("on",s==="entrainement");
+  renderCampus();
+}
+function renderCampus(){
+  var data=campSub==="louange"?CAMP_LOUANGE:CAMP_ENT;
+  var days={};var dayOrder=[];
+  data.forEach(function(s){
+    var dj=s.d.split(" ")[0];
+    if(!days[dj]){days[dj]=[];dayOrder.push(dj);}
+    days[dj].push(s);
+  });
+  var h="";
+  dayOrder.forEach(function(dj){
+    h+='<div class="day-block"><div class="day-title">'+dj+'</div>';
+    days[dj].forEach(function(s){
+      var moment=s.d.indexOf("Matin")>=0?"Matin":"Soir";
+      var isSoir=moment==="Soir";
+      h+='<div class="seance">';
+      if(campSub==="entrainement"){
+        if(s.ent)h+='<div style="background:var(--sky-d);color:#fff;padding:8px 14px;font-size:11px;font-weight:600">Entraînement du <span style="font-weight:400">'+fdlong(s.ent)+'</span></div>';
+        h+='<div class="seance-hd'+(isSoir?' soir':'')+'">'+s.d+'</div>';
+      } else {
+        h+='<div class="seance-hd'+(isSoir?' soir':'')+'">'+moment+'</div>';
+      }
+      h+='<div class="seance-bd">';
+      h+='<div class="scol"><div class="scol-lbl">Présidence &amp; choristes</div>';
+      s.ch.split(",").forEach(function(c,i){
+        if(i===0){
+          h+='<div style="font-size:13px;font-weight:600;color:var(--sky-d);margin-bottom:5px;padding:3px 0">'+c.trim()+'</div>';
+        } else {
+          h+='<span class="chip">'+c.trim()+'</span>';
+        }
+      });
+      h+='</div>';
+      h+='<div class="scol"><div class="scol-lbl">Musiciens</div>';
+      s.mu.split(",").forEach(function(c){h+='<span class="chip">'+c.trim()+'</span>';});
+      h+='</div></div>';
+      var rg=s.rg;
+      if(!rg){
+        var match=CAMP_LOUANGE.find(function(x){return x.d===s.d;});
+        if(match)rg=match.rg;
+      }
+      if(rg){
+        h+='<div class="regie-bar">';
+        rg.split(",").forEach(function(r){
+          var p=r.split(":");
+          h+='<div><span style="color:var(--muted)">'+p[0].trim()+'</span> <b style="color:var(--text);margin-left:4px">'+(p[1]||"").trim()+'</b></div>';
+        });
+        h+='</div>';
+      }
+      h+='<div class="chants-block">';
+      h+='<div class="chants-lbl">Chants</div>';
+      [1,2,3,4].forEach(function(i){h+='<div class="chant-line">Chant '+i+'</div>';});
+      h+='</div>';
+      h+='</div>';
+    });
+    h+='</div>';
+  });
+  document.getElementById("camp-content").innerHTML=h;
+}
+
+/* ─ RÉUNION ─ */
+var reunTri="Tout";
+function setReunTri(t){reunTri=t;renderReunions();}
+function renderReunions(){
+  var opts=["Tout","T1","T2","T3","T4","Réunion","Entr.","Événement"];
+  document.getElementById("tri-reun").innerHTML=opts.map(function(o){
+    return '<button class="fb'+(o===reunTri?" on":"")+'" onclick="setReunTri(\''+o+'\')">'+o+'</button>';
+  }).join("");
+  var rows=REUNIONS.filter(function(r){
+    if(reunTri==="Tout")return true;
+    if(["T1","T2","T3","T4"].indexOf(reunTri)>=0)return tri(r.d)===reunTri;
+    return r.tp===reunTri;
+  });
+  var grps={};var grpOrder=[];
+  rows.forEach(function(r){
+    var m=MOIS[+r.d.split("-")[1]-1];
+    if(!grps[m]){grps[m]=[];grpOrder.push(m);}
+    grps[m].push(r);
+  });
+  var h="";
+  grpOrder.forEach(function(m){
+    h+='<div class="mois-hd">'+m+'</div>';
+    grps[m].forEach(function(r){h+=buildReunCard(r);});
+  });
+  document.getElementById("reun-content").innerHTML=h||'<div class="empty">Aucune entrée</div>';
+}
+function buildReunCard(r){
+  var col=RCOL[r.tp]||{bg:"#f0ebe0",c:"#5a7a82",l:r.tp||""};
+  var p=r.d.split("-");var dt=new Date(+p[0],+p[1]-1,+p[2]);
+  var h='<div class="reun-card">';
+  h+='<div class="rdb"><div class="rdb-day">'+dt.getDate()+'</div><div class="rdb-m">'+MOISC[dt.getMonth()]+'</div></div>';
+  h+='<div class="rdb-body">';
+  h+='<div class="rdb-type">'+(r.ti||"")+'</div>';
+  h+='<div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:3px">';
+  h+='<span class="rbadge" style="background:'+col.bg+';color:'+col.c+'">'+col.l+'</span>';
+  if(r.gr)h+='<span class="rbadge" style="background:var(--beige);color:var(--muted)">'+r.gr+'</span>';
+  h+='</div>';
+  if(r.h||r.li)h+='<div class="rdb-lieu">'+[r.h,r.li].filter(Boolean).join(" — ")+'</div>';
+  if(r.pa)h+='<div style="font-size:10px;color:var(--muted);margin-top:2px">'+r.pa+'</div>';
+  if(r.no)h+='<div style="font-size:10px;color:var(--sky-d);margin-top:2px;font-style:italic">'+r.no+'</div>';
+  h+='</div></div>';
+  return h;
+}
+
+/* ─ INIT ─ */
+
+/* ── GOOGLE SHEETS LOADER ── */
+var SHEET_ID="1khxUvrKSnrqtkkdCsmXiCjW3TjWcSV38otYOGMO5klU";
+var BASE_URL="https://docs.google.com/spreadsheets/d/1khxUvrKSnrqtkkdCsmXiCjW3TjWcSV38otYOGMO5klU/gviz/tq?tqx=out:csv&sheet=";
+function csvUrl(sh){return BASE_URL+encodeURIComponent(sh);}
+function parseCSV(text){
+  var rows=[];var lines=text.split("\n");
+  lines.forEach(function(line){
+    if(!line.trim())return;
+    var row=[];var cur="";var inQ=false;
+    for(var i=0;i<line.length;i++){
+      var c=line[i];
+      if(c==='"'){if(inQ&&line[i+1]==='"'){cur+='"';i++;}else inQ=!inQ;}
+      else if(c===','&&!inQ){row.push(cur.trim());cur="";}
+      else cur+=c;
+    }
+    row.push(cur.trim());rows.push(row);
+  });return rows;
+}
+function parseDate(s){
+  if(!s)return null;
+  var m=s.match(/Date\((\d+),(\d+),(\d+)\)/);
+  if(m)return m[1]+"-"+String(+m[2]+1).padStart(2,"0")+"-"+String(+m[3]).padStart(2,"0");
+  if(/^\d{4}-\d{2}-\d{2}/.test(s))return s.slice(0,10);
+  return null;
+}
+function fetchSheet(sh,cb){fetch(csvUrl(sh)).then(function(r){return r.text();}).then(function(t){cb(parseCSV(t));}).catch(function(){cb([]); });}
+function loadCulte(cb){fetchSheet("Franco_Louange",function(rows){var d=[];rows.forEach(function(r){var dt=parseDate(r[0]);if(!dt)return;d.push([dt,r[1]||"",r[2]||"",r[3]||"",r[4]||"",r[5]||"",r[6]||"",r[7]||"",r[8]||"",r[9]||"",r[10]||""]);  });cb(d);});}
+function loadDej(cb){fetchSheet("Franco_Table_PtD",function(rows){var d=[];rows.forEach(function(r){var dt=parseDate(r[1]);if(!dt)return;var eq=[r[2],r[3],r[4],r[5]].filter(function(v){return v&&v!=="---";});d.push([dt,eq.join(",")]);  });cb(d);});}
+function loadMulti(sheets,cols,cb){var all=[];var done=0;sheets.forEach(function(sh){fetchSheet(sh,function(rows){rows.forEach(function(r){var dt=parseDate(r[0]);if(!dt)return;var row=[dt];for(var i=1;i<=cols;i++)row.push(r[i]||"");all.push(row);});if(++done===sheets.length){all.sort(function(a,b){return a[0]<b[0]?-1:1;});cb(all);}});});}
+function loadFidMusic(cb){fetchSheet("Fidélité_Musicien",function(rows){var d=[];rows.forEach(function(r){var dt=parseDate(r[1]);if(!dt)return;d.push([dt,r[2]||"",r[3]||"",r[4]||"",r[5]||""]);  });cb(d);});}
+function loadEDDSheet(cb){fetchSheet("EDD",function(rows){var res={};var per=null;var cls=null;rows.forEach(function(r){if(r[0]&&r[0].indexOf("PÉRIODE")>=0){per=r[0];if(!res[per])res[per]={label:r[0],classes:{}};return;}if(r[0]==="DATE")return;var dt=parseDate(r[0]);if(dt&&per){if(r[7])cls=r[7];if(cls){if(!res[per].classes[cls])res[per].classes[cls]=[];res[per].classes[cls].push([dt,r[1]||"",r[2]||"",r[3]||"",r[4]||"",r[5]||""]);  }}});cb(res);});}
+function loadReuSheet(cb){fetchSheet("Réunion",function(rows){var d=[];rows.forEach(function(r){var dt=parseDate(r[0]);if(!dt||!r[2])return;d.push({d:dt,h:r[1]||"",tp:r[2]||"",gr:r[3]||"",ti:r[6]||"",li:r[5]||"",pa:r[7]||"",no:r[8]||"",aff:r[9]||""});});var hasAff=d.some(function(r){return r.aff!==""});if(hasAff)d=d.filter(function(r){return r.aff.toLowerCase()==="v"||r.aff==="✓"||r.aff==="1";});cb(d);});}
+var N_DONE=0;
+function done(){if(++N_DONE>=8){document.getElementById("loading").style.display="none";doInit();}}
+function loadAll(){
+  loadCulte(function(d){CULTE=d;done();});
+  loadDej(function(d){DEJEUNER=d;done();});
+  loadMulti(["Paix_T1","Paix _T2","Paix _T3","Paix_T4"],4,function(d){PAIX=d;done();});
+  loadMulti(["Fidélité_T1","Fidélité_T2","Fidélité_T3","Fidélité_T4"],4,function(d){FIDELITE=d;done();});
+  loadFidMusic(function(d){FIDELITE_MUSIC=d;done();});
+  loadMulti(["Bonté_T1","Bonté _T2","Bonté _T3","Bonté_T4"],4,function(d){BONTE=d;done();});
+  loadEDDSheet(function(d){EDD_DATA=d;EDD_PERIODES=Object.keys(d);done();});
+  loadReuSheet(function(d){REUNIONS=d;done();});
+}
+function doInit(){
+  var td=t();
+  var todayRow=CULTE.find(function(r){return r[0]===td;});
+  if(todayRow)culteTri=tri(todayRow[0]);
+  else{var m=new Date().getMonth()+1;culteTri=m<=3?"T1":m<=6?"T2":m<=9?"T3":"T4";}
+  grpTri=culteTri;
+  var cm=new Date().getMonth()+1;
+  eddPeriode=EDD_PERIODES[cm<=2?0:cm<=4?1:cm<=6?2:cm<=8?3:cm<=10?4:5]||EDD_PERIODES[0]||"";
+  var m2=new Date().getMonth()+1;dejTri=m2<=3?"T1":m2<=6?"T2":m2<=9?"T3":"T4";
+  renderCulte();renderDejeuner();showGrp("paix");
+  renderEddPeriodeTabs();renderEddClasseTabs();renderEdd();
+  renderCampus();renderReunions();
+}
+(function(){loadAll();})();</script>
+</body>
+</html>
