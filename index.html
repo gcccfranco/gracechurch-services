@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Grace Church — Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky-l:#d4e8ec;--sky-d:#2d5a65;--sky-hd:#1a3a42;
+  --beige:#f0ebe0;--beige-d:#e0d8c8;--cream:#faf8f4;
+  --text:#1a2a2e;--muted:#5a7a82;--white:#fff;--border:#e0d8c8;
+  --g-paix:#6b4a8e;--g-paix-l:#ede4f5;
+  --g-fid:#a03030;--g-fid-l:#fde8e8;
+  --g-bonte:#8b4a2e;--g-bonte-l:#f5ede4;
+  --edd-c:#3b6d11;--edd-l:#e8f5e8;
+  --hl:#fff8e1;--hl-b:#f0c040;
+  --sc-bg:#fef2f2;--sc-bd:#fca5a5;--sc-tx:#991b1b;
+}
+[data-dark]{
+  --sky-l:#1a3a40;--sky-d:#7ec8d4;--sky-hd:#0a1e22;
+  --beige:#1e2a2e;--beige-d:#263036;--cream:#111e22;
+  --text:#e0eaec;--muted:#6a9aa4;--white:#1a2a2e;--border:#263036;
+  --g-paix-l:#231a2e;--g-fid-l:#2e1a1a;--g-bonte-l:#2a1e14;--edd-l:#1a2e1a;
+  --hl:#2a2400;--hl-b:#b08000;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);max-width:480px;margin:0 auto;min-height:100vh;transition:background .2s,color .2s}
+
+/* HEADER */
+.hdr{background:var(--sky-hd);padding:14px 16px 0;transition:background .2s}
+.hdr-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
+.hdr-left{}
+.hdr-title{font-family:'Lora',serif;font-size:17px;font-weight:600;color:#fff}
+.hdr-sub{font-size:9px;color:var(--sky-l);margin-top:2px;letter-spacing:.04em}
+.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.hdr-date-day{font-size:12px;font-weight:600;color:#fff;text-align:right}
+.hdr-date-full{font-size:10px;color:var(--sky-l);text-align:right}
+.hdr-btns{display:flex;gap:6px;align-items:center}
+.dark-btn{width:28px;height:28px;border-radius:50%;border:.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;color:#fff}
+.priv-badge{font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px;background:rgba(255,255,255,.15);color:var(--sky-l);border:.5px solid rgba(255,255,255,.2)}
+
+/* NAV */
+.nav{display:flex;overflow-x:auto;gap:3px;padding-bottom:12px;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nb{flex-shrink:0;padding:6px 14px;border-radius:20px;border:none;font-size:12px;font-weight:500;background:rgba(255,255,255,.15);color:rgba(255,255,255,.7);cursor:pointer;white-space:nowrap;transition:all .15s;font-family:'DM Sans',sans-serif}
+.nb.on{background:#fff;color:var(--sky-hd);font-weight:600}
+
+/* PANELS */
+.pnl{display:none;padding:14px 14px 56px}.pnl.on{display:block}
+.filter-row{display:flex;gap:5px;margin-bottom:12px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.filter-row::-webkit-scrollbar{display:none}
+.fb{flex-shrink:0;padding:5px 12px;border-radius:20px;border:1.5px solid var(--border);font-size:11px;font-weight:500;background:var(--white);color:var(--muted);cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif}
+.fb.on{background:var(--sky-hd);border-color:var(--sky-hd);color:#fff}
+
+/* LÉGENDE */
+.legend{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted);margin-bottom:10px}
+.l-dot{width:11px;height:11px;border-radius:3px;border:1.5px solid var(--hl-b);background:var(--hl);flex-shrink:0}
+
+/* SÉPARATEUR MOIS */
+.mois-sep{background:var(--sky-l);padding:5px 10px;font-size:10px;font-weight:700;color:var(--sky-hd);text-transform:uppercase;letter-spacing:.08em;border-top:.5px solid var(--sky-d);border-bottom:.5px solid var(--sky-d)}
+.mois-sep:first-child{border-top:none}
+[data-dark] .mois-sep{background:var(--sky-l);color:var(--sky-d)}
+
+/* TABLEAU */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px;border:.5px solid var(--border)}
+.tbl{width:100%;border-collapse:collapse;font-size:11px;min-width:420px}
+.tbl thead tr th{background:var(--sky-hd);color:#fff;padding:8px 9px;text-align:left;font-size:10px;font-weight:600;white-space:nowrap;letter-spacing:.04em}
+.tbl td{padding:7px 9px;border-bottom:.5px solid var(--border);color:var(--text)}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:var(--beige)}
+.tbl .dc{font-weight:500;color:var(--sky-d);white-space:nowrap}
+.tbl .pc{font-weight:500}
+
+/* HIGHLIGHT SEMAINE COURANTE */
+.tbl tr.tr-hl td{background:var(--hl) !important}
+.tbl tr.tr-hl .dc{color:var(--sky-hd)}
+.tbl tr.tr-hl .dc::before{content:"● ";font-size:8px;color:var(--hl-b)}
+.badge-week{display:inline-block;background:var(--hl-b);color:#7a5000;border-radius:4px;padding:0 5px;font-size:9px;font-weight:700;margin-left:4px}
+
+/* BADGE SAINTE CÈNE */
+.badge-sc{display:inline-block;background:var(--sc-bg);color:var(--sc-tx);border-radius:4px;padding:0 6px;font-size:9px;font-weight:700;margin-left:4px;border:.5px solid var(--sc-bd)}
+
+/* GROUPE */
+.grp-tabs{display:flex;gap:5px;margin-bottom:12px}
+.grp-tab{flex:1;padding:8px 4px;border-radius:10px;border:1.5px solid var(--border);font-size:11px;font-weight:500;text-align:center;cursor:pointer;background:var(--white);color:var(--muted);transition:all .15s;font-family:'DM Sans',sans-serif}
+.grp-tab[data-g=paix].on{background:var(--g-paix);border-color:var(--g-paix);color:#fff}
+.grp-tab[data-g=fid].on{background:var(--g-fid);border-color:var(--g-fid);color:#fff}
+.grp-tab[data-g=bonte].on{background:var(--g-bonte);border-color:var(--g-bonte);color:#fff}
+.fid-sub{display:flex;gap:5px;margin-bottom:12px}
+.fid-sb{flex:1;padding:6px;border-radius:8px;border:1.5px solid var(--border);font-size:11px;font-weight:500;text-align:center;cursor:pointer;background:var(--white);color:var(--muted);transition:all .15s;font-family:'DM Sans',sans-serif}
+.fid-sb.on{background:var(--g-fid-l);border-color:var(--g-fid);color:var(--g-fid)}
+
+/* GROUPE CARDS */
+.grp-card{background:var(--white);border-radius:12px;border:.5px solid var(--border);margin-bottom:8px;overflow:hidden}
+.grp-head{padding:8px 14px;font-size:12px;font-weight:500;display:flex;justify-content:space-between}
+.gc-paix{background:var(--g-paix-l);color:var(--g-paix)}
+.gc-fid{background:var(--g-fid-l);color:var(--g-fid)}
+.gc-bonte{background:var(--g-bonte-l);color:var(--g-bonte)}
+.grp-row{display:flex;gap:6px;padding:7px 14px;border-top:.5px solid var(--border);font-size:12px}
+.grp-lbl{color:var(--muted);width:68px;flex-shrink:0;font-size:11px}
+.grp-val{color:var(--text);font-weight:500;flex:1}
+.grp-card.tr-hl{border-color:var(--hl-b);box-shadow:0 0 0 1.5px var(--hl-b)}
+.grp-card.tr-hl .grp-head{background:var(--hl)}
+
+/* EDD */
+.edd-ptabs{display:flex;gap:4px;margin-bottom:12px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.edd-ptabs::-webkit-scrollbar{display:none}
+.edd-ptb{flex-shrink:0;padding:5px 10px;border-radius:20px;border:1.5px solid var(--border);font-size:11px;font-weight:500;background:var(--white);color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .15s;font-family:'DM Sans',sans-serif}
+.edd-ptb.on{background:var(--sky-hd);border-color:var(--sky-hd);color:#fff}
+.edd-ctabs{display:flex;gap:5px;margin-bottom:12px}
+.edd-ctb{flex:1;padding:7px;border-radius:8px;border:1.5px solid var(--border);font-size:12px;font-weight:500;text-align:center;cursor:pointer;background:var(--white);color:var(--muted);transition:all .15s;font-family:'DM Sans',sans-serif}
+.edd-ctb.on{background:var(--sky-l);border-color:var(--sky-d);color:var(--sky-hd)}
+
+/* EDD TABLE */
+.edd-tbl-wrap{overflow-x:auto;border-radius:10px;border:.5px solid var(--border)}
+.edd-tbl{width:100%;border-collapse:collapse;font-size:11px;min-width:380px}
+.edd-tbl thead tr th{background:var(--sky-hd);color:#fff;padding:8px 9px;text-align:left;font-size:10px;font-weight:600;white-space:nowrap;letter-spacing:.04em}
+.edd-tbl td{padding:7px 9px;border-bottom:.5px solid var(--border);color:var(--text)}
+.edd-tbl tr:last-child td{border-bottom:none}
+.edd-tbl tr:hover td{background:var(--beige)}
+.edd-tbl tr.tr-hl td{background:var(--hl) !important}
+.edd-tbl tr.tr-hl td:first-child{font-weight:700;color:var(--sky-hd)}
+.edd-tbl tr.tr-hl td:first-child::before{content:"● ";font-size:8px;color:var(--hl-b)}
+
+/* DÉJEUNER — cartes sans labels */
+.dej-card{background:var(--white);border-radius:12px;border:.5px solid var(--border);margin-bottom:8px;display:flex;align-items:center;gap:12px;padding:10px 14px}
+.dej-date{font-size:11px;font-weight:500;color:var(--sky-d);width:80px;flex-shrink:0}
+.dej-eq{font-size:12px;color:var(--text);flex:1;line-height:1.5}
+.dej-card.tr-hl{border-color:var(--hl-b);background:var(--hl)}
+
+/* CAMPUS */
+.camp-sub{display:flex;gap:5px;margin-bottom:14px}
+.camp-sb{flex:1;padding:8px;border-radius:10px;border:1.5px solid var(--border);font-size:12px;font-weight:500;text-align:center;cursor:pointer;background:var(--white);color:var(--muted);transition:all .15s;font-family:'DM Sans',sans-serif}
+.camp-sb.on{background:var(--sky-hd);border-color:var(--sky-hd);color:#fff}
+.day-block{background:var(--white);border-radius:14px;border:.5px solid var(--border);margin-bottom:12px;overflow:hidden}
+.day-title{background:var(--sky-d);padding:10px 14px;font-size:13px;font-weight:500;color:#fff}
+.seance{border-top:.5px solid var(--border)}
+.seance-hd{padding:8px 14px;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;background:var(--sky-l);color:var(--sky-d)}
+.seance-bd{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.scol{padding:10px 14px;border-right:.5px solid var(--border)}
+.scol:last-child{border-right:none}
+.scol-lbl{font-size:10px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;margin-bottom:5px}
+.chip{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;background:var(--beige);color:var(--text);margin:2px 2px 2px 0}
+.regie-bar{padding:10px 14px;border-top:.5px solid var(--border);display:flex;gap:12px;flex-wrap:wrap;font-size:11px;background:var(--white)}
+.regie-bar span{color:var(--muted)}.regie-bar b{color:var(--text);font-weight:500}
+.ent-bar{padding:6px 14px;border-top:.5px solid var(--border);font-size:11px;background:var(--beige-d);color:var(--muted)}
+.ent-bar b{color:var(--sky-d)}
+.chants-block{padding:10px 14px;border-top:.5px solid var(--border);background:var(--beige)}
+.chants-lbl{font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;font-weight:500}
+.chant-line{font-size:12px;color:var(--muted);padding:4px 8px;border-radius:6px;border:.5px dashed var(--border);margin-bottom:4px;background:var(--white)}
+
+/* EMPTY */
+.empty{text-align:center;padding:30px;color:var(--muted);font-size:13px}
+
+/* LOADING SPINNER */
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<div id="loading" style="position:fixed;top:0;left:0;right:0;bottom:0;background:#1a3a42;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999">
+  <div style="width:38px;height:38px;border:3px solid rgba(212,232,236,.3);border-top-color:#d4e8ec;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:14px"></div>
+  <div style="font-family:'Lora',serif;font-size:16px;font-weight:600;color:#fff">Grace Church</div>
+  <div style="font-size:12px;color:rgba(212,232,236,.7);margin-top:4px">Chargement...</div>
+</div>
+
+<div class="hdr">
+  <div class="hdr-top">
+    <div class="hdr-left">
+      <div class="hdr-title">Grace Church</div>
+      <div class="hdr-sub">Planning des services</div>
+    </div>
+    <div class="hdr-right">
+      <div class="hdr-btns">
+        <button class="dark-btn" id="dark-btn" onclick="toggleDark()">☀</button>
+        <span class="priv-badge">Privé</span>
+      </div>
+      <div class="hdr-date-day" id="hdr-day"></div>
+      <div class="hdr-date-full" id="hdr-date"></div>
+    </div>
+  </div>
+  <nav class="nav">
+    <button class="nb on" onclick="showTab('culte',this)">Culte Franco</button>
+    <button class="nb" onclick="showTab('dejeuner',this)">Prépa. Table</button>
+    <button class="nb" onclick="showTab('groupe',this)">Groupe</button>
+    <button class="nb" onclick="showTab('edd',this)">EDD</button>
+    <button class="nb" onclick="showTab('campus',this)">Campus</button>
+  </nav>
+</div>
+
+<div class="pnl on" id="pnl-culte">
+  <div class="filter-row" id="tri-culte"></div>
+  <div class="legend"><div class="l-dot"></div>Dimanche de la semaine courante</div>
+  <div id="culte-content"></div>
+</div>
+
+<div class="pnl" id="pnl-dejeuner">
+  <div class="filter-row" id="tri-dej"></div>
+  <div class="legend"><div class="l-dot"></div>Dimanche de la semaine courante</div>
+  <div id="dej-content"></div>
+</div>
+
+<div class="pnl" id="pnl-groupe">
+  <div class="grp-tabs">
+    <div class="grp-tab" data-g="paix" onclick="showGrp('paix')">Paix</div>
+    <div class="grp-tab" data-g="fid" onclick="showGrp('fid')">Fidélité</div>
+    <div class="grp-tab" data-g="bonte" onclick="showGrp('bonte')">Bonté</div>
+  </div>
+  <div class="filter-row" id="tri-grp"></div>
+  <div class="fid-sub" id="fid-sub" style="display:none">
+    <div class="fid-sb on" onclick="showFidSub('groupe',this)">Planning groupe</div>
+    <div class="fid-sb" onclick="showFidSub('musiciens',this)">Planning musiciens 🎵</div>
+  </div>
+  <div class="legend"><div class="l-dot"></div>Dimanche de la semaine courante</div>
+  <div id="grp-content"></div>
+</div>
+
+<div class="pnl" id="pnl-edd">
+  <div class="edd-ptabs" id="edd-ptabs"></div>
+  <div class="edd-ctabs" id="edd-ctabs"></div>
+  <div class="legend"><div class="l-dot"></div>Dimanche de la semaine courante</div>
+  <div id="edd-content"></div>
+</div>
+
+<div class="pnl" id="pnl-campus">
+  <div class="camp-sub">
+    <div class="camp-sb on" id="csb-louange" onclick="showCampSub('louange')">Louange</div>
+    <div class="camp-sb" id="csb-entrainement" onclick="showCampSub('entrainement')">Entraînement</div>
+  </div>
+  <div id="camp-content"></div>
+</div>
+
+<script>
+// ─── CONSTANTES ───────────────────────────────────────────────────
+var SHEET_ID="1khxUvrKSnrqtkkdCsmXiCjW3TjWcSV38otYOGMO5klU";
+var MOIS_FR=["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
+var JOURC=["Dim.","Lun.","Mar.","Mer.","Jeu.","Ven.","Sam."];
+var MOISC=["Janv.","Févr.","Mars","Avril","Mai","Juin","Juil.","Août","Sept.","Oct.","Nov.","Déc."];
+var MOIS=["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
+
+// ─── DONNÉES ──────────────────────────────────────────────────────
+var CULTE=[],DEJEUNER=[],PAIX=[],FIDELITE=[],FIDELITE_MUSIC=[],BONTE=[];
+var EDD_DATA={},EDD_PERIODES=[],EDD_CLASSES=["中班","大班","高班"];
+var CAMP_LOUANGE=[],CAMP_ENT=[];
+var N_DONE=0;
+
+// ─── ÉTATS ────────────────────────────────────────────────────────
+var culteTri="T1",dejTri="T1",grpTri="T1";
+var grpCur="paix",fidSub="groupe";
+var eddPeriode="",eddClasse="中班";
+
+// ─── DATE DU JOUR ─────────────────────────────────────────────────
+(function(){
+  var jours=["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"];
+  var now=new Date();
+  document.getElementById("hdr-day").textContent=jours[now.getDay()];
+  document.getElementById("hdr-date").textContent=now.getDate()+" "+MOIS_FR[now.getMonth()]+" "+now.getFullYear();
+})();
+
+// ─── UTILITAIRES ──────────────────────────────────────────────────
+function pad(n){return String(n).padStart(2,"0");}
+function t(){var d=new Date();return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());}
+function currentSundayStr(){
+  var d=new Date();
+  var day=d.getDay(); // 0=dim
+  var diff=(day===0)?0:7-day; // prochain dimanche ou aujourd'hui si dimanche
+  // En fait on veut le dimanche de la semaine courante (lun-dim)
+  // Semaine: lun=1...dim=0, le dimanche est à la fin
+  // Si on est lun-sam, le dimanche de cette semaine est dans diff jours
+  // Si on est dim, c'est aujourd'hui
+  var sun=new Date(d);
+  if(day===0){} // aujourd'hui
+  else{sun.setDate(d.getDate()+(7-day));}
+  return sun.getFullYear()+"-"+pad(sun.getMonth()+1)+"-"+pad(sun.getDate());
+}
+function fd(s){
+  var p=s.split("-");
+  var d=new Date(+p[0],+p[1]-1,+p[2]);
+  return JOURC[d.getDay()]+" "+d.getDate()+" "+MOISC[+p[1]-1];
+}
+function fdShort(s){
+  var p=s.split("-");
+  return pad(+p[2])+"/"+pad(+p[1]);
+}
+function mois(s){if(!s)return 1;var p=s.split("-");return +p[1];}
+function tri(s){var m=mois(s);return m<=3?"T1":m<=6?"T2":m<=9?"T3":"T4";}
+function filterTri(rows,t,idx){return rows.filter(function(r){return tri(r[idx||0])===t;});}
+function groupByMois(rows,dateIdx){
+  var g={};
+  rows.forEach(function(r){
+    var m=MOIS[mois(r[dateIdx])-1];
+    if(!g[m])g[m]=[];
+    g[m].push(r);
+  });
+  return g;
+}
+function buildFiltres(cont,cur,fn){
+  document.getElementById(cont).innerHTML=["T1","T2","T3","T4"].map(function(t){
+    return '<button class="fb'+(t===cur?" on":"")+'" onclick="'+fn+'(\''+t+'\')">'+t+'</button>';
+  }).join("");
+}
+function isFirstOfMonth(rows,idx,rowIdx){
+  if(rowIdx===0)return true;
+  return mois(rows[rowIdx][0])!==mois(rows[rowIdx-1][0]);
+}
+
+// ─── FETCH ────────────────────────────────────────────────────────
+function csvUrl(sh){return"https://docs.google.com/spreadsheets/d/"+SHEET_ID+"/gviz/tq?tqx=out:csv&sheet="+encodeURIComponent(sh);}
+function parseCSV(t){var rows=[];var cur=[];var inq=false;var f="";for(var i=0;i<t.length;i++){var c=t[i];if(c==='"'){if(inq&&t[i+1]==='"'){f+='"';i++;}else{inq=!inq;}}else if(c===','&&!inq){cur.push(f);f="";}else if((c==='\n'||c==='\r')&&!inq){if(c==='\r'&&t[i+1]==='\n')i++;cur.push(f);f="";if(cur.length>1||cur[0]!=="")rows.push(cur);cur=[];}else{f+=c;}}if(f||cur.length)cur.push(f);if(cur.length>1||cur[0]!=="")rows.push(cur);return rows;}
+function parseDate(s){if(!s)return null;s=s.replace(/"+/g,"").trim();var m=s.match(/Date\((\d+),(\d+),(\d+)\)/);if(m)return m[1]+"-"+String(+m[2]+1).padStart(2,"0")+"-"+String(+m[3]).padStart(2,"0");if(/^\d{2}\/\d{2}$/.test(s)){var p=s.split("/");return"2026-"+p[1]+"-"+p[0];}if(/^\d{2}\/\d{2}\/\d{4}$/.test(s)){var p=s.split("/");return p[2]+"-"+p[1]+"-"+p[0];}return null;}
+function fetchSheet(sh,cb){fetch(csvUrl(sh)).then(function(r){return r.text();}).then(function(t){cb(parseCSV(t));}).catch(function(){cb([]);});}
+
+// ─── CHARGEMENT ───────────────────────────────────────────────────
+function shDone(){if(++N_DONE>=8){document.getElementById("loading").style.display="none";doInit();}}
+function loadCulte(cb){fetchSheet("Franco_Louange",function(rows){var d=[];rows.forEach(function(r){var dt=parseDate(r[0]);if(!dt)return;d.push([dt,r[1]||"",r[2]||"",r[3]||"",r[4]||"",r[5]||"",r[6]||"",r[7]||"",r[8]||"",r[9]||"",r[10]||""]);});cb(d);});}
+function loadDej(cb){fetchSheet("Franco_Table_PtD",function(rows){var d=[];rows.forEach(function(r){var dL=parseDate(r[1]);if(dL){var eq=[r[2],r[3],r[4],r[5]].filter(function(v){return v&&v!=="---"&&v!=="—"&&v.indexOf("Équipe")<0&&v.trim()!=="";});if(eq.length>0)d.push([dL,eq.join(", ")]);}var dR=parseDate(r[7]);if(dR){var eq=[r[8],r[9],r[10],r[11]].filter(function(v){return v&&v!=="---"&&v!=="—"&&v.indexOf("Équipe")<0&&v.trim()!=="";});if(eq.length>0)d.push([dR,eq.join(", ")]);  });d.sort(function(a,b){return a[0]<b[0]?-1:1;});cb(d);});}
+function loadMulti(sheets,cols,cb){var all=[];var done=0;sheets.forEach(function(sh){fetchSheet(sh,function(rows){rows.forEach(function(r){var dt=parseDate(r[0]);if(!dt)return;var row=[dt];for(var i=1;i<=cols;i++)row.push(r[i]||"");all.push(row);});if(++done===sheets.length){all.sort(function(a,b){return a[0]<b[0]?-1:1;});cb(all);}});}); }
+function loadFidMusic(cb){fetchSheet("Fidélité_Musicien",function(rows){var d=[];rows.forEach(function(r){var dt=parseDate(r[1]);if(!dt)return;d.push([dt,r[2]||"",r[3]||"",r[4]||"",r[5]||""]);});cb(d);});}
+function loadEDDSheet(cb){
+  fetchSheet("EDD",function(rows){
+    // Parser par plage de dates (pas par marqueur PÉRIODE)
+    // P1=Jan-Fév(1-2), P2=Mar-Avr(3-4), P3=Mai-Jun(5-6), P4=Jul-Aoû(7-8), P5=Sep-Oct(9-10), P6=Nov-Déc(11-12)
+    var periodeKeys=["P1_JanFev","P2_MarAvr","P3_MaiJun","P4_JulAou","P5_SepOct","P6_NovDec"];
+    var res={};
+    periodeKeys.forEach(function(k){res[k]={label:k,classes:{"中班":[],"大班":[],"高班":[]}};});
+    var cls=null;
+    rows.forEach(function(r){
+      if(r[0]==="DATE")return;
+      var dt=parseDate(r[0]);
+      if(!dt)return;
+      if(r[7]&&r[7].trim()&&["中班","大班","高班"].indexOf(r[7].trim())>=0)cls=r[7].trim();
+      if(!cls)return;
+      var m=mois(dt);
+      var pIdx=(m<=2?0:m<=4?1:m<=6?2:m<=8?3:m<=10?4:5);
+      var pk=periodeKeys[pIdx];
+      res[pk].classes[cls].push([dt,r[1]||"",r[2]||"",r[3]||"",r[4]||"",r[5]||""]);
+    });
+    cb(res);
+  });
+}
+function loadReuSheet(cb){fetchSheet("Réunion",function(rows){var d=[];rows.forEach(function(r){var dt=parseDate(r[0]);if(!dt||!r[2])return;d.push({d:dt,h:r[1]||"",type:r[2]||"",lieu:r[3]||"",note:r[4]||"",actif:r[9]||""});});d.sort(function(a,b){return a.d<b.d?-1:1;});cb(d);});}
+function loadCampus(ent,cb){
+  fetchSheet("Campus_Louange",function(rows){
+    var d=[];
+    rows.forEach(function(r){
+      var dateCol=ent?r[14]:r[0];
+      var dt=parseDate(dateCol);
+      if(!dt)return;
+      d.push({d:dt,moment:r[1]||"",pres:r[2]||"",cho1:r[3]||"",cho2:r[4]||"",piano:r[5]||"",guitare:r[6]||"",batt:r[7]||"",sono:r[8]||"",ppt:r[9]||"",c1:r[10]||"",c2:r[11]||"",c3:r[12]||"",c4:r[13]||""});
+    });
+    d.sort(function(a,b){return a.d<b.d?-1:1;});
+    cb(d);
+  });
+}
+function loadAll(){
+  loadCulte(function(d){CULTE=d;shDone();});
+  loadDej(function(d){DEJEUNER=d;shDone();});
+  loadMulti(["Paix_T1","Paix _T2","Paix _T3","Paix_T4"],4,function(d){PAIX=d;shDone();});
+  loadMulti(["Fidélité_T1","Fidélité_T2","Fidélité_T3","Fidélité_T4"],4,function(d){FIDELITE=d;shDone();});
+  loadFidMusic(function(d){FIDELITE_MUSIC=d;shDone();});
+  loadMulti(["Bonté_T1","Bonté _T2","Bonté _T3","Bonté_T4"],4,function(d){BONTE=d;shDone();});
+  loadEDDSheet(function(d){EDD_DATA=d;EDD_PERIODES=Object.keys(d);shDone();});
+  loadReuSheet(function(d){REUNIONS=d;shDone();});
+  loadCampus(false,function(d){CAMP_LOUANGE=d;});
+  loadCampus(true,function(d){CAMP_ENT=d;});
+}
+
+// ─── NAVIGATION ───────────────────────────────────────────────────
+function showTab(k,btn){
+  document.querySelectorAll(".pnl").forEach(function(p){p.classList.remove("on");});
+  document.querySelectorAll(".nb").forEach(function(b){b.classList.remove("on");});
+  document.getElementById("pnl-"+k).classList.add("on");
+  if(btn)btn.classList.add("on");
+}
+function toggleDark(){
+  var b=document.body;
+  if(b.hasAttribute("data-dark")){b.removeAttribute("data-dark");document.getElementById("dark-btn").textContent="☀";}
+  else{b.setAttribute("data-dark","");document.getElementById("dark-btn").textContent="🌙";}
+}
+
+// ─── CULTE FRANCO ─────────────────────────────────────────────────
+var culteTri="T1";
+function setCulteTri(v){culteTri=v;renderCulte();}
+function renderCulte(){
+  buildFiltres("tri-culte",culteTri,"setCulteTri");
+  var rows=filterTri(CULTE,culteTri);
+  var td=currentSundayStr();
+  var grps=groupByMois(rows,0);
+  var h="";
+  Object.keys(grps).forEach(function(m){
+    h+='<div class="mois-sep">'+m+'</div>';
+    h+='<div class="tbl-wrap"><table class="tbl"><thead><tr>';
+    ["Date","Présidence","Choriste 1","Choriste 2","Piano","Guitare","Batterie","Sono","PPT","Orateur","Trad."].forEach(function(c){h+="<th>"+c+"</th>";});
+    h+="</tr></thead><tbody>";
+    grps[m].forEach(function(r){
+      var isT=r[0]===td;
+      var isSC=isFirstSundayOfMonth(r[0],rows);
+      h+='<tr'+(isT?' class="tr-hl"':'')+'>';
+      var dateStr=fdShort(r[0]);
+      if(isSC)dateStr+=' <span class="badge-sc">Sainte Cène</span>';
+      if(isT)dateStr+=' <span class="badge-week">Cette semaine</span>';
+      h+='<td class="dc">'+dateStr+'</td>';
+      h+='<td class="pc">'+(r[1]||"—")+'</td>';
+      [r[2],r[3],r[4],r[5],r[6],r[7],r[8],r[9],r[10]].forEach(function(v){h+="<td>"+(v||"—")+"</td>";});
+      h+="</tr>";
+    });
+    h+="</tbody></table></div>";
+  });
+  document.getElementById("culte-content").innerHTML=h||'<div class="empty">Aucune donnée</div>';
+}
+function isFirstSundayOfMonth(dateStr,allRows){
+  // C'est la 1ère entrée du mois dans le tableau
+  var m=mois(dateStr);
+  for(var i=0;i<allRows.length;i++){
+    if(mois(allRows[i][0])===m)return allRows[i][0]===dateStr;
+  }
+  return false;
+}
+
+// ─── PRÉPA. TABLE ─────────────────────────────────────────────────
+var dejTri="T1";
+function setDejTri(v){dejTri=v;renderDejeuner();}
+function renderDejeuner(){
+  buildFiltres("tri-dej",dejTri,"setDejTri");
+  var td=currentSundayStr();
+  var rows=filterTri(DEJEUNER,dejTri);
+  var grps=groupByMois(rows,0);
+  var h="";
+  Object.keys(grps).forEach(function(m){
+    h+='<div class="mois-sep">'+m+'</div>';
+    rows.filter(function(r){return MOIS[mois(r[0])-1]===m;}).forEach(function(r){
+      var isT=r[0]===td;
+      var eq=r[1]?r[1]:"—";
+      h+='<div class="dej-card'+(isT?' tr-hl':'')+'"><div class="dej-date">'+fdShort(r[0])+(isT?' <span class="badge-week">Cette semaine</span>':'')+' </div>';
+      h+='<div class="dej-eq">'+eq+'</div></div>';
+    });
+  });
+  document.getElementById("dej-content").innerHTML=h||'<div class="empty">Aucune donnée pour ce trimestre</div>';
+}
+
+// ─── GROUPE ───────────────────────────────────────────────────────
+var grpTri="T1",grpCur="paix",fidSub="groupe";
+function setGrpTri(v){grpTri=v;renderGrp();}
+function showGrp(g){
+  grpCur=g;
+  document.querySelectorAll(".grp-tab").forEach(function(t){t.classList.remove("on");});
+  document.querySelector(".grp-tab[data-g="+g+"]").classList.add("on");
+  var fs=document.getElementById("fid-sub");
+  if(fs)fs.style.display=(g==="fid")?"flex":"none";
+  renderGrp();
+}
+function showFidSub(s,btn){
+  fidSub=s;
+  document.querySelectorAll(".fid-sb").forEach(function(b){b.classList.remove("on");});
+  btn.classList.add("on");
+  renderGrp();
+}
+function renderGrp(){
+  buildFiltres("tri-grp",grpTri,"setGrpTri");
+  var td=currentSundayStr();
+  var cls=grpCur==="paix"?"gc-paix":grpCur==="fid"?"gc-fid":"gc-bonte";
+  var h="";
+
+  if(grpCur==="fid"&&fidSub==="musiciens"){
+    var rows=filterTri(FIDELITE_MUSIC,grpTri);
+    var grps=groupByMois(rows,0);
+    Object.keys(grps).forEach(function(m){
+      h+='<div class="mois-sep">'+m+'</div>';
+      grps[m].forEach(function(r){
+        var isT=r[0]===td;
+        h+='<div class="grp-card'+(isT?' tr-hl':'')+'"><div class="grp-head gc-fid">'+fdShort(r[0])+(isT?' <span class="badge-week">Cette semaine</span>':'')+' </div>';
+        h+='<div class="grp-row"><div class="grp-lbl">Présidence</div><div class="grp-val">'+(r[1]||"—")+'</div></div>';
+        h+='<div class="grp-row"><div class="grp-lbl">Piano</div><div class="grp-val">'+(r[2]||"—")+'</div></div>';
+        h+='<div class="grp-row"><div class="grp-lbl">Guitare</div><div class="grp-val">'+(r[3]||"—")+'</div></div>';
+        h+='<div class="grp-row"><div class="grp-lbl">Batterie</div><div class="grp-val">'+(r[4]||"—")+'</div></div>';
+        h+='</div>';
+      });
+    });
+  } else {
+    var data=grpCur==="paix"?PAIX:grpCur==="fid"?FIDELITE:BONTE;
+    var rows=filterTri(data,grpTri);
+    var grps=groupByMois(rows,0);
+    Object.keys(grps).forEach(function(m){
+      h+='<div class="mois-sep">'+m+'</div>';
+      grps[m].forEach(function(r){
+        var isT=r[0]===td;
+        h+='<div class="grp-card'+(isT?' tr-hl':'')+'"><div class="grp-head '+cls+'">';
+        h+=fdShort(r[0])+(isT?' <span class="badge-week">Cette semaine</span>':'');
+        if(r[3])h+='<span style="font-weight:400;opacity:.8"> — '+r[3]+'</span>';
+        h+='</div>';
+        h+='<div class="grp-row"><div class="grp-lbl">Présidence</div><div class="grp-val">'+(r[1]||"—")+'</div></div>';
+        if(r[2])h+='<div class="grp-row"><div class="grp-lbl">Orateur</div><div class="grp-val">'+r[2]+'</div></div>';
+        if(grpCur==="fid"&&r[4])h+='<div class="grp-row"><div class="grp-lbl">Piano</div><div class="grp-val">'+r[4]+'</div></div>';
+        h+='</div>';
+      });
+    });
+  }
+  document.getElementById("grp-content").innerHTML=h||'<div class="empty">Aucune donnée</div>';
+}
+
+// ─── EDD ──────────────────────────────────────────────────────────
+var eddPeriode="",eddClasse="中班";
+function renderEddPeriodeTabs(){
+  var labels=["Janv–Fév","Mars–Avr","Mai–Jun","Juil–Aoû","Sep–Oct","Nov–Déc"];
+  var keys=["P1_JanFev","P2_MarAvr","P3_MaiJun","P4_JulAou","P5_SepOct","P6_NovDec"];
+  document.getElementById("edd-ptabs").innerHTML=keys.map(function(k,i){
+    return '<button class="edd-ptb'+(k===eddPeriode?" on":"")+'" onclick="setEddPeriode(\''+k+'\')">'+labels[i]+'</button>';
+  }).join("");
+}
+function renderEddClasseTabs(){
+  document.getElementById("edd-ctabs").innerHTML=EDD_CLASSES.map(function(c){
+    return '<div class="edd-ctb'+(c===eddClasse?" on":"")+'" onclick="setEddClasse(\''+c+'\')">'+c+'</div>';
+  }).join("");
+}
+function setEddPeriode(p){eddPeriode=p;renderEddPeriodeTabs();renderEdd();}
+function setEddClasse(c){eddClasse=c;renderEddClasseTabs();renderEdd();}
+function renderEdd(){
+  var rows=(EDD_DATA[eddPeriode]&&EDD_DATA[eddPeriode].classes&&EDD_DATA[eddPeriode].classes[eddClasse])||[];
+  var td=currentSundayStr();
+  var grps=groupByMois(rows,0);
+  var h="";
+  if(rows.length===0){
+    document.getElementById("edd-content").innerHTML='<div class="empty">Aucune donnée pour cette période</div>';
+    return;
+  }
+  h+='<div class="edd-tbl-wrap"><table class="edd-tbl"><thead><tr>';
+  ["Date","Présidence","Suppléant","Piano","Batterie","Guitare"].forEach(function(c){h+="<th>"+c+"</th>";});
+  h+="</tr></thead><tbody>";
+  var lastMois=null;
+  rows.forEach(function(r){
+    var m=MOIS[mois(r[0])-1];
+    if(m!==lastMois){
+      lastMois=m;
+      h+='<tr><td colspan="6" style="background:var(--sky-l);padding:4px 9px;font-size:10px;font-weight:700;color:var(--sky-hd);text-transform:uppercase;letter-spacing:.08em;border-top:.5px solid var(--sky-d);border-bottom:.5px solid var(--sky-d)">'+m+'</td></tr>';
+    }
+    var isT=r[0]===td;
+    h+='<tr'+(isT?' class="tr-hl"':'')+'>';
+    var dateStr=fdShort(r[0])+(isT?' <span class="badge-week">Cette semaine</span>':'');
+    h+='<td style="white-space:nowrap;color:var(--sky-d);font-weight:500">'+dateStr+'</td>';
+    [r[1],r[2],r[3],r[4],r[5]].forEach(function(v){h+="<td>"+(v||"—")+"</td>";});
+    h+="</tr>";
+  });
+  h+="</tbody></table></div>";
+  document.getElementById("edd-content").innerHTML=h;
+}
+
+// ─── CAMPUS ───────────────────────────────────────────────────────
+var campSub="louange";
+function showCampSub(s){
+  campSub=s;
+  document.getElementById("csb-louange").classList.toggle("on",s==="louange");
+  document.getElementById("csb-entrainement").classList.toggle("on",s==="entrainement");
+  renderCampus();
+}
+function renderCampus(){
+  var data=campSub==="louange"?CAMP_LOUANGE:CAMP_ENT;
+  if(!data||!data.length){document.getElementById("camp-content").innerHTML='<div class="empty">Chargement...</div>';return;}
+  var byDay={};
+  data.forEach(function(s){if(!byDay[s.d])byDay[s.d]=[];byDay[s.d].push(s);});
+  var h="";
+  Object.keys(byDay).sort().forEach(function(d){
+    var seances=byDay[d];
+    var dp=d.split("-");
+    var date=new Date(+dp[0],+dp[1]-1,+dp[2]);
+    h+='<div class="day-block"><div class="day-title">'+JOURC[date.getDay()]+" "+date.getDate()+" "+MOISC[+dp[1]-1]+" "+dp[0]+'</div>';
+    seances.forEach(function(s){
+      h+='<div class="seance"><div class="seance-hd'+(s.moment.toLowerCase().indexOf("soir")>=0?" soir":"")+'">'+(s.moment||"Séance")+'</div>';
+      h+='<div class="seance-bd">';
+      if(campSub==="louange"){
+        var cols=[["Président",s.pres],["Choristes",s.cho1+(s.cho2?", "+s.cho2:"")],["Piano",s.piano],["Guitare",s.guitare],["Batterie",s.batt],["Sono",s.sono],["PPT",s.ppt]];
+        cols.forEach(function(c){if(c[1])h+='<div class="scol"><div class="scol-lbl">'+c[0]+'</div><div class="chip">'+c[1]+'</div></div>';});
+        if(s.c1||s.c2||s.c3||s.c4){
+          h+='</div><div class="chants-block"><div class="chants-lbl">Chants</div>';
+          [s.c1,s.c2,s.c3,s.c4].forEach(function(c){if(c)h+='<div class="chant-line">'+c+'</div>';});
+          h+='</div>';
+        } else {h+='</div>';}
+      } else {
+        var cols=[["Président",s.pres],["Choristes",s.cho1+(s.cho2?", "+s.cho2:"")],["Piano",s.piano],["Guitare",s.guitare],["Batterie",s.batt]];
+        cols.forEach(function(c){if(c[1])h+='<div class="scol"><div class="scol-lbl">'+c[0]+'</div><div class="chip">'+c[1]+'</div></div>';});
+        h+='</div>';
+        h+='<div class="ent-bar">Entraînement · <b>'+d+'</b></div>';
+      }
+      h+='</div>';
+    });
+    h+='</div>';
+  });
+  document.getElementById("camp-content").innerHTML=h||'<div class="empty">Aucune donnée Campus</div>';
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────
+function doInit(){
+  var m=new Date().getMonth()+1;
+  culteTri=m<=3?"T1":m<=6?"T2":m<=9?"T3":"T4";
+  grpTri=culteTri;
+  dejTri=culteTri;
+  var cm=new Date().getMonth();
+  var periodeKeys=["P1_JanFev","P2_MarAvr","P3_MaiJun","P4_JulAou","P5_SepOct","P6_NovDec"];
+  eddPeriode=periodeKeys[cm<=1?0:cm<=3?1:cm<=5?2:cm<=7?3:cm<=9?4:5];
+  renderCulte();
+  renderDejeuner();
+  showGrp("paix");
+  renderEddPeriodeTabs();
+  renderEddClasseTabs();
+  renderEdd();
+  renderCampus();
+}
+
+(function(){loadAll();})();
+</script>
+</body>
+</html>
